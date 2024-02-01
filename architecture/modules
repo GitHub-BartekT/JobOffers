@@ -1,0 +1,7 @@
+1. Offers CRUD - Offer
+2. Downloading offers from other websites via foreign API – OffersFetcher
+3. Measuring time based on which certain actions can be taken – Scheduler
+4. Finding and registering users - LoginAndRegister
+5. Auth and generating JWT - JWTAuthenticator
+6. Stores and manages queries - CacheManager
+
