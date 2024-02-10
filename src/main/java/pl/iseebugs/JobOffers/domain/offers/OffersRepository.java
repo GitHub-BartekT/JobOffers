@@ -10,4 +10,8 @@ interface OffersRepository {
     List<Offer> getAll();
 
     Offer save(Offer entity);
+
+    boolean existsById(String id);
+
+    boolean existsByUrl(String url);
 }
