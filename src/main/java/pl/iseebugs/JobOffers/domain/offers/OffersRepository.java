@@ -9,5 +9,5 @@ interface OffersRepository {
 
     List<Offer> getAll();
 
-    Offer sava(Offer entity);
+    Offer save(Offer entity);
 }
