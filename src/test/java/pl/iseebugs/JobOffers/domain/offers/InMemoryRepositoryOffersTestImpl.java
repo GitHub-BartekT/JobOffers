@@ -23,4 +23,14 @@ class InMemoryRepositoryOffersTestImpl implements OffersRepository{
         inMemoryRepository.put(entity.id(), entity);
         return inMemoryRepository.get(entity.id());
     }
+
+    @Override
+    public boolean existsById(String id) {
+        return inMemoryRepository.containsKey(id);
+    }
+
+    @Override
+    public boolean existsByUrl(String url) {
+        return inMemoryRepository.values().stream().anyMatch(offer -> offer.url().equals(url));
+    }
 }

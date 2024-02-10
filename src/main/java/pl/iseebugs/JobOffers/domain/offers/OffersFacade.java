@@ -22,9 +22,9 @@ public class OffersFacade {
 
     public OffersReadModel save(OffersWriteModel offersWriteModel){
         if(offersRepository.existsByUrl(offersWriteModel.getUrl())){
-            throw new IllegalStateException("Offer with that url already exists");
+            throw new IllegalArgumentException("Offer with that url already exists");
         } else if (offersRepository.existsById(offersWriteModel.getId())) {
-            throw new IllegalStateException("Offer with that Id already exists");
+            throw new IllegalArgumentException("Offer with that Id already exists");
         }
 
         Offer toSave = Offer.builder()
