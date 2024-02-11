@@ -17,9 +17,9 @@ public class SchedulerFacade {
     Clock clock;
 
     public List<OfferSchedulerReadModel> getAll(){
-        if(TimeValidator.wasCalledWithinLastHour()){
+        if(TimeValidator.wasCalledWithinLastHour(clock)){
             return getAllFromCache();
-        } else{
+        } else {
             return getAllFromDB();
         }
     }
