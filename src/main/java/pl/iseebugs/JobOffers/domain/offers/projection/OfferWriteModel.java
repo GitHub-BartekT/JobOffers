@@ -7,7 +7,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class OffersWriteModel {
+public class OfferWriteModel {
     private String id;
     private String url;
     private String jobPosition;

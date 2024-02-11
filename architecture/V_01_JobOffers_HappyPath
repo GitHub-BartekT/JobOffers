@@ -1,7 +1,7 @@
 # typical path: user want to see offers but have to be logged in and external server should have some offers
 
 Step 1: There are no offers on in external HTTP server.
-Step 2: Scheduler ran firs time and made GET to external server and system add 0 offers to database
+Step 2: Scheduler ran 1st time and made GET to external server and system add 0 offers to database
 Step 3: User tried to get JWT token by requesting POST /token with username-someUser, password=somePassword and system returned UNAUTHORIZED(401)
 Step 4: User made GET /offers with no jwt token and system returned UNAUTHORIZED(401)
 Step 5: user made POST /register with username=someUser, password=somePassword and system registered user with status OK(200)

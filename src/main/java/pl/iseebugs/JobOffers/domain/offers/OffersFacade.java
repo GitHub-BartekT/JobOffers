@@ -1,8 +1,8 @@
 package pl.iseebugs.JobOffers.domain.offers;
 
 import lombok.AllArgsConstructor;
-import pl.iseebugs.JobOffers.domain.offers.projection.OffersReadModel;
-import pl.iseebugs.JobOffers.domain.offers.projection.OffersWriteModel;
+import pl.iseebugs.JobOffers.domain.offers.projection.OfferReadModel;
+import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
 
 import java.util.List;
 
@@ -12,29 +12,32 @@ public class OffersFacade {
     OffersRepository offersRepository;
     IdGenerable idGenerable;
 
-    public OffersReadModel getOffer(String id){
+    public OfferReadModel getOffer(String id) throws OfferNotFoundException {
+        OfferReadModel toRead = offersRepository.getById(id)
+                                .map(OfferMapper::toOfferReadModel)
+                                .orElseThrow(OfferNotFoundException::new);
+        return toRead;
+    }
+
+    public List<OfferReadModel> getAll(){
         return null;
     }
 
-    public List<OffersReadModel> getAll(){
-        return null;
-    }
-
-    public OffersReadModel save(OffersWriteModel offersWriteModel){
-        if(offersRepository.existsByUrl(offersWriteModel.getUrl())){
+    public OfferReadModel save(OfferWriteModel offerWriteModel){
+        if(offersRepository.existsByUrl(offerWriteModel.getUrl())){
             throw new IllegalArgumentException("Offer with that url already exists");
-        } else if (offersRepository.existsById(offersWriteModel.getId())) {
+        } else if (offersRepository.existsById(offerWriteModel.getId())) {
             throw new IllegalArgumentException("Offer with that Id already exists");
         }
 
         Offer toSave = Offer.builder()
                 .id(idGenerable.createNewId())
-                .url(offersWriteModel.getUrl())
-                .jobPosition(offersWriteModel.getJobPosition())
-                .salaryLowerBound(offersWriteModel.getSalaryLowerBound())
-                .salaryUpperBound(offersWriteModel.getSalaryUpperBound())
+                .url(offerWriteModel.getUrl())
+                .jobPosition(offerWriteModel.getJobPosition())
+                .salaryLowerBound(offerWriteModel.getSalaryLowerBound())
+                .salaryUpperBound(offerWriteModel.getSalaryUpperBound())
                 .build();
-        OffersReadModel saved = OfferMapper.toOffersReadModel(offersRepository.save(toSave));
+        OfferReadModel saved = OfferMapper.toOfferReadModel(offersRepository.save(toSave));
         return saved;
     }
 }

@@ -1,11 +1,11 @@
 package pl.iseebugs.JobOffers.domain.offers;
 
-import pl.iseebugs.JobOffers.domain.offers.projection.OffersReadModel;
-import pl.iseebugs.JobOffers.domain.offers.projection.OffersWriteModel;
+import pl.iseebugs.JobOffers.domain.offers.projection.OfferReadModel;
+import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
 
 class OfferMapper {
-    static OffersReadModel toOffersReadModel(Offer offer){
-        return OffersReadModel.builder()
+    static OfferReadModel toOfferReadModel(Offer offer){
+        return OfferReadModel.builder()
                 .id(offer.id())
                 .url(offer.url())
                 .jobPosition(offer.jobPosition())
@@ -14,8 +14,8 @@ class OfferMapper {
                 .build();
     }
 
-    static OffersWriteModel toOffersWriteModel(Offer offer){
-        return OffersWriteModel.builder()
+    static OfferWriteModel toOfferWriteModel(Offer offer){
+        return OfferWriteModel.builder()
                 .id(offer.id())
                 .url(offer.url())
                 .jobPosition(offer.jobPosition())

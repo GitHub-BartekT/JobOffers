@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class OffersReadModel {
+public class OfferReadModel {
     private String id;
     private String url;
     private String jobPosition;
