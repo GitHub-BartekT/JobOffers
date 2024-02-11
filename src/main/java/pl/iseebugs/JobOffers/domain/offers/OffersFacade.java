@@ -3,6 +3,7 @@ package pl.iseebugs.JobOffers.domain.offers;
 import lombok.AllArgsConstructor;
 import pl.iseebugs.JobOffers.domain.offers.projection.OfferReadModel;
 import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
+import pl.iseebugs.JobOffers.domain.scheduler.SchedulerFacade;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class OffersFacade {
 
     OffersRepository offersRepository;
     IdGenerable idGenerable;
+    SchedulerFacade schedulerFacade;
 
     public OfferReadModel getOffer(String id) throws OfferNotFoundException {
         OfferReadModel toRead = offersRepository.getById(id)
@@ -20,7 +22,7 @@ public class OffersFacade {
     }
 
     public List<OfferReadModel> getAll(){
-        return null;
+        return schedulerFacade.getAll();
     }
 
     public OfferReadModel save(OfferWriteModel offerWriteModel){

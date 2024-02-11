@@ -9,6 +9,9 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.Test;
 import pl.iseebugs.JobOffers.domain.offers.projection.OfferReadModel;
 import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
+import pl.iseebugs.JobOffers.domain.scheduler.SchedulerFacade;
+
+import java.util.List;
 
 
 class OffersFacadeTest {
@@ -18,6 +21,7 @@ class OffersFacadeTest {
         //given
         OffersRepository offersRepository = new InMemoryRepositoryOffersTestImpl();
         IdGenerable mockIdGenerator = mock(IdGenerable.class);
+        SchedulerFacade mockSchedulerFacade = mock(SchedulerFacade.class);
         when(mockIdGenerator.createNewId()).thenReturn("foo");
         OfferWriteModel toSave = OfferWriteModel.builder()
                 .url("bar")
@@ -26,7 +30,7 @@ class OffersFacadeTest {
                 .salaryUpperBound(10000.53d)
                 .build();
         //System Under Test
-        OffersFacade toTest = OffersConfiguration.offersFacade(offersRepository, mockIdGenerator);
+        OffersFacade toTest = OffersConfiguration.offersFacade(offersRepository, mockIdGenerator, mockSchedulerFacade);
         //when
         toTest.save(toSave);
         OfferReadModel readOffer = toTest.getOffer("foo");
@@ -44,13 +48,39 @@ class OffersFacadeTest {
         OffersRepository mockRepository = mock(OffersRepository.class);
         when(mockRepository.existsById(anyString())).thenReturn(false);
         IdGenerable mockGenerator = mock(IdGenerable.class);
+        SchedulerFacade mockSchedulerFacade = mock(SchedulerFacade.class);
         String id = "foo";
         //System Under Test
-        OffersFacade toTest = OffersConfiguration.offersFacade(mockRepository,mockGenerator);
+        OffersFacade toTest = OffersConfiguration.offersFacade(mockRepository, mockGenerator, mockSchedulerFacade);
         //when
         var exception = catchThrowable(() ->toTest.getOffer(id));
         //then
         assertThat(exception).isInstanceOf(OfferNotFoundException.class);
+    }
+
+    @Test
+    void getAll_return_list_when_objects_in_repository(){
+        //given
+        OffersRepository inMemoryRepositoryOffersTest = new InMemoryRepositoryOffersTestImpl();
+        IdGenerable idGenerator = new IdGeneratorUUID();
+        SchedulerFacade mockSchedulerFacade = mock(SchedulerFacade.class);
+        when(mockSchedulerFacade.getAll()).thenReturn(List.of(
+                OfferReadModel.builder()
+                    .url("foo")
+                    .build(),
+                OfferReadModel.builder()
+                    .url("bar")
+                    .build())
+        );
+        //System Under Test
+        OffersFacade toTest = OffersConfiguration.offersFacade(inMemoryRepositoryOffersTest, idGenerator, mockSchedulerFacade);
+        //when
+        List<OfferReadModel> result = toTest.getAll();
+        //then
+        assertThat(result.size()).isEqualTo(2);
+        assertThat(result.stream()
+                .map(OfferReadModel::getUrl)
+                .toList()).containsExactlyInAnyOrder("foo","bar");
     }
 
     @Test
@@ -59,11 +89,12 @@ class OffersFacadeTest {
         OffersRepository mockRepository = mock(OffersRepository.class);
         when(mockRepository.existsByUrl(anyString())).thenReturn(true);
         IdGenerable mockGenerator = mock(IdGenerable.class);
+        SchedulerFacade mockSchedulerFacade = mock(SchedulerFacade.class);
         OfferWriteModel toSave = OfferWriteModel.builder()
                 .url("123")
                 .build();
         //System Under Test
-        OffersFacade toTest = OffersConfiguration.offersFacade(mockRepository,mockGenerator);
+        OffersFacade toTest = OffersConfiguration.offersFacade(mockRepository, mockGenerator, mockSchedulerFacade);
         //when
         var exception = catchThrowable(() -> toTest.save(toSave));
         //then
@@ -78,12 +109,13 @@ class OffersFacadeTest {
         when(mockRepository.existsByUrl(anyString())).thenReturn(false);
         when(mockRepository.existsById(anyString())).thenReturn(true);
         IdGenerable mockGenerator = mock(IdGenerable.class);
+        SchedulerFacade mockSchedulerFacade = mock(SchedulerFacade.class);
         OfferWriteModel toSave = OfferWriteModel.builder()
                 .url("123")
                 .id("123")
                 .build();
         //System Under Test
-        OffersFacade toTest = OffersConfiguration.offersFacade(mockRepository,mockGenerator);
+        OffersFacade toTest = OffersConfiguration.offersFacade(mockRepository, mockGenerator, mockSchedulerFacade);
         //when
         var exception = catchThrowable(() -> toTest.save(toSave));
         //then
@@ -96,6 +128,7 @@ class OffersFacadeTest {
         //given
         OffersRepository repository = new InMemoryRepositoryOffersTestImpl();
         IdGenerable generator = new IdGeneratorUUID();
+        SchedulerFacade mockSchedulerFacade = mock(SchedulerFacade.class);
         OfferWriteModel toSave = OfferWriteModel.builder()
                 .url("foo")
                 .jobPosition("bar")
@@ -103,7 +136,7 @@ class OffersFacadeTest {
                 .salaryUpperBound(10000.53d)
                 .build();
         //System Under Test
-        OffersFacade offersFacade = OffersConfiguration.offersFacade(repository,generator);
+        OffersFacade offersFacade = OffersConfiguration.offersFacade(repository, generator, mockSchedulerFacade);
         //when
         OfferReadModel saved = offersFacade.save(toSave);
         //then
