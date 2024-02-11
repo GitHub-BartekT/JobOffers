@@ -1,12 +1,11 @@
-package pl.iseebugs.JobOffers.domain.scheduler.projection;
+package pl.iseebugs.JobOffers.infrastructure.security.cacheManager.projection;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Builder
 @Getter
-public class OfferSchedulerReadModel {
+public class OfferCacheReadModel {
     private String id;
     private String url;
     private String jobPosition;
