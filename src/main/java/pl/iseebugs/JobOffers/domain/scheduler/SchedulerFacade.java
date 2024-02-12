@@ -2,12 +2,10 @@ package pl.iseebugs.JobOffers.domain.scheduler;
 
 import lombok.AllArgsConstructor;
 import pl.iseebugs.JobOffers.domain.offers.projection.OfferReadModel;
-import pl.iseebugs.JobOffers.domain.scheduler.projection.OfferSchedulerReadModel;
 import pl.iseebugs.JobOffers.infrastructure.security.cacheManager.CacheManagerFacade;
 
 import java.time.Clock;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class SchedulerFacade {
@@ -16,7 +14,7 @@ public class SchedulerFacade {
     CacheManagerFacade cacheManagerFacade;
     Clock clock;
 
-    public List<OfferSchedulerReadModel> getAll(){
+    public List<OfferReadModel> getAll(){
         if(TimeValidator.wasCalledWithinLastHour(clock)){
             return getAllFromCache();
         } else {
@@ -24,13 +22,12 @@ public class SchedulerFacade {
         }
     }
 
-    List<OfferSchedulerReadModel> getAllFromCache(){
-        return cacheManagerFacade.getAll().stream()
-                .map(SchedulerMapper::toOfferReadModelFromCache)
-                .toList();
+    private List<OfferReadModel> getAllFromCache(){
+        return cacheManagerFacade.getAll();
     }
 
-    List<OfferSchedulerReadModel> getAllFromDB(){
+    private List<OfferReadModel> getAllFromDB(){
+        cacheManagerFacade.updateCache();
         return schedulerRepository.getAll().stream()
                 .map(SchedulerMapper::toOfferReadModel)
                 .toList();
