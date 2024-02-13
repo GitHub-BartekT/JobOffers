@@ -28,7 +28,7 @@ public class SchedulerFacade {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                fetchListener.onScheduleFetch();
+                fetchListener.onScheduleFetchAllOffersAndSaveAllIfNotExists();
             }
         };
 

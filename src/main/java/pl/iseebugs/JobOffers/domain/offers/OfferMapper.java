@@ -9,16 +9,7 @@ class OfferMapper {
                 .id(offer.id())
                 .url(offer.url())
                 .jobPosition(offer.jobPosition())
-                .salaryLowerBound(offer.salaryLowerBound())
-                .salaryUpperBound(offer.salaryUpperBound())
-                .build();
-    }
-
-    static OfferWriteModel toOfferWriteModel(Offer offer){
-        return OfferWriteModel.builder()
-                .id(offer.id())
-                .url(offer.url())
-                .jobPosition(offer.jobPosition())
+                .companyName(offer.companyName())
                 .salaryLowerBound(offer.salaryLowerBound())
                 .salaryUpperBound(offer.salaryUpperBound())
                 .build();

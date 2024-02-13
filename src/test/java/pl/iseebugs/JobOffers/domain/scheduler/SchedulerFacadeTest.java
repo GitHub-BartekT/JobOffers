@@ -46,7 +46,7 @@ class SchedulerFacadeTest {
         //given
         SchedulerFacade toTest = SchedulerFacadeTestConfiguration();
         //then
-        verify(toTest.fetchListener, times(1)).onScheduleFetch();
+        verify(toTest.fetchListener, times(1)).onScheduleFetchAllOffersAndSaveAllIfNotExists();
     }
 
     private static SchedulerFacade SchedulerFacadeTestConfiguration() {

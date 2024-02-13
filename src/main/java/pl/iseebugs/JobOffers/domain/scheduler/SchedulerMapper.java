@@ -8,6 +8,7 @@ class SchedulerMapper {
                 .id(offerScheduler.id())
                 .url(offerScheduler.url())
                 .jobPosition(offerScheduler.jobPosition())
+                .companyName(offerScheduler.companyName())
                 .salaryLowerBound(offerScheduler.salaryLowerBound())
                 .salaryUpperBound(offerScheduler.salaryUpperBound())
                 .build();
