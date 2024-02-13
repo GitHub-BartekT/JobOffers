@@ -8,7 +8,7 @@ interface UserRepository {
 
     User save(User user);
 
-    boolean existsById(String id);
+    boolean existsByUsername(String id);
 
 
 }

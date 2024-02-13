@@ -17,21 +17,23 @@ public class LoginAndRegisterFacade {
     }
 
     RegisterResultReadModel register(UserWriteModel userWriteModel) {
-        if (userRepository.existsById(userWriteModel.getUsername())){
+        if (userRepository.existsByUsername(userWriteModel.getUsername())){
             return RegisterResultReadModel.builder()
-                    .id(userWriteModel.getId())
+                    .id("")
                     .isCreated(false)
                     .username(userWriteModel.getUsername()).build();
         }
+
         User toSave = User.builder()
                 .id(idGenerator.createNewId())
                 .password(userWriteModel.getPassword())
                 .username(userWriteModel.getUsername())
                 .build();
-        UserReadModel saved = UserMapper.toUserReadModel(userRepository.save(toSave));
+
+        User saved = userRepository.save(toSave);
         return RegisterResultReadModel.builder()
-                .id(saved.getId())
+                .id(saved.id())
                 .isCreated(true)
-                .username(saved.getUsername()).build();
+                .username(saved.username()).build();
     }
 }

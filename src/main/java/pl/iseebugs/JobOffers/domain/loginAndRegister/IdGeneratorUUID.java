@@ -1,10 +1,11 @@
 package pl.iseebugs.JobOffers.domain.loginAndRegister;
 
-import pl.iseebugs.JobOffers.domain.offers.IdGenerable;
+import lombok.AllArgsConstructor;
 
 import java.util.UUID;
 
-class IdGeneratorUUID implements IdGenerable {
+@AllArgsConstructor
+class IdGeneratorUUID implements pl.iseebugs.JobOffers.domain.loginAndRegister.IdGenerable {
 
     @Override
     public String createNewId() {

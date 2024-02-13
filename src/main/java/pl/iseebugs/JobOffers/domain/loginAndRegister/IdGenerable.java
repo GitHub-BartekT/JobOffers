@@ -1,5 +1,5 @@
 package pl.iseebugs.JobOffers.domain.loginAndRegister;
 
-public interface IdGenerable {
+interface IdGenerable {
     String createNewId();
 }
