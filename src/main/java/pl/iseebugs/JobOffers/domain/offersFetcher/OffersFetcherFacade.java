@@ -5,9 +5,9 @@ import pl.iseebugs.JobOffers.domain.scheduler.SchedulerFetchListener;
 
 @AllArgsConstructor
 public class OffersFetcherFacade implements SchedulerFetchListener {
-
-
+    
     @Override
-    public void onScheduleFetch() {
+    public void onScheduleFetchAllOffersAndSaveAllIfNotExists() {
     }
+
 }

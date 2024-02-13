@@ -36,6 +36,7 @@ public class OffersFacade {
                 .id(idGenerable.createNewId())
                 .url(offerWriteModel.getUrl())
                 .jobPosition(offerWriteModel.getJobPosition())
+                .companyName(offerWriteModel.getCompanyName())
                 .salaryLowerBound(offerWriteModel.getSalaryLowerBound())
                 .salaryUpperBound(offerWriteModel.getSalaryUpperBound())
                 .build();
