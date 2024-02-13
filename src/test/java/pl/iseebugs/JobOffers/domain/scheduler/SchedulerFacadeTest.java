@@ -3,22 +3,19 @@ package pl.iseebugs.JobOffers.domain.scheduler;
 import org.junit.jupiter.api.Test;
 import pl.iseebugs.JobOffers.AdjustableClock;
 import pl.iseebugs.JobOffers.domain.offers.projection.OfferReadModel;
+import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetcherFacade;
 import pl.iseebugs.JobOffers.infrastructure.security.cacheManager.CacheManagerFacade;
 
-import java.time.Clock;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.List;
 
 import static java.time.ZoneOffset.UTC;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class SchedulerFacadeTest {
 
-    static AdjustableClock clock = new AdjustableClock(LocalDateTime.of(2024, 2, 6, 10, 0, 0).toInstant(UTC), ZoneId.systemDefault());
+   static AdjustableClock clock = new AdjustableClock(LocalDateTime.of(2024, 2, 6, 10, 0, 0).toInstant(UTC), ZoneId.systemDefault());
 
     @Test
     void getAll_time_over_one_hour(){
@@ -42,6 +39,14 @@ class SchedulerFacadeTest {
         List<OfferReadModel> result = toTest.getAll();
         //then
         assertThat(result.size()).isEqualTo(2);
+    }
+
+    @Test
+    void eventListener_is_called_when_scheduler_starts(){
+        //given
+        SchedulerFacade toTest = SchedulerFacadeTestConfiguration();
+        //then
+        verify(toTest.fetchListener, times(1)).onScheduleFetch();
     }
 
     private static SchedulerFacade SchedulerFacadeTestConfiguration() {
@@ -71,7 +76,13 @@ class SchedulerFacadeTest {
                         .url("url_2")
                         .build()
         ));
-        return SchedulerConfiguration.toSchedulerFacade(mockInMemoryRepository,mockCacheManagerFacade,clock);
+        SchedulerFetchListener mockFetchListener = mock(OffersFetcherFacade.class);
+
+        return SchedulerConfiguration.toSchedulerFacadeToTest(
+                mockInMemoryRepository,
+                mockCacheManagerFacade,
+                clock,
+                mockFetchListener);
     }
 
     
