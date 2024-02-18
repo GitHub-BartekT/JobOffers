@@ -1,6 +1,7 @@
 package pl.iseebugs.JobOffers.domain.offersFetcher;
 
 import lombok.AllArgsConstructor;
+import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
 import pl.iseebugs.JobOffers.domain.scheduler.SchedulerFetchListener;
 
 import java.util.ArrayList;
@@ -16,19 +17,20 @@ public class OffersFetcherFacade implements SchedulerFetchListener {
     @Override
     public void onScheduleFetchAllOffersAndSaveAllIfNotExists() {
         List<OfferFetch> currentOffers = fetcherRepository.getAll();
-        List<OfferFetch> newOffers = offersFetchable.getOffers();
+        List<OfferWriteModel> newOffers = offersFetchable.getOffers();
         List<OfferFetch> addedOffers = new ArrayList<>();
 
-        for (OfferFetch offer: newOffers) {
+        for (OfferWriteModel offer: newOffers) {
             if (currentOffers.stream()
-                    .noneMatch(offerFetch -> offerFetch.url().equals(offer.url()))){
+                    .noneMatch(offerFetch -> offerFetch.url().equals(offer.getUrl()))){
                 addedOffers.add(OfferFetch.builder()
                         .id(idGenerable.createNewId())
-                        .companyName(offer.companyName())
-                        .jobPosition(offer.jobPosition())
-                        .url(offer.url())
-                        .salaryLowerBound(offer.salaryLowerBound())
-                        .salaryUpperBound(offer.salaryUpperBound()).build());
+                        .companyName(offer.getCompanyName())
+                        .jobPosition(offer.getJobPosition())
+                        .url(offer.getUrl())
+                        .salaryLowerBound(offer.getSalaryLowerBound())
+                        .salaryUpperBound(offer.getSalaryUpperBound())
+                        .build());
             }
         }
 
