@@ -1,5 +1,8 @@
 package pl.iseebugs.JobOffers.domain.scheduler;
 
+import lombok.Value;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.scheduling.annotation.Scheduled;
 import pl.iseebugs.JobOffers.domain.offers.projection.OfferReadModel;
 import pl.iseebugs.JobOffers.infrastructure.security.cacheManager.CacheManagerFacade;
 
@@ -7,7 +10,7 @@ import java.time.Clock;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
+@Log4j2
 public class SchedulerFacade {
 
     private final SchedulerRepository schedulerRepository;
@@ -21,22 +24,11 @@ public class SchedulerFacade {
         this.cacheManagerFacade = cacheManagerFacade;
         this.clock = clock;
         this.fetchListener = fetchListener;
-        startScheduler();
     }
 
+    @Scheduled(cron = "${job-offers.offers-scheduler.fetcherRunOccurrence}")
     private void startScheduler(){
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                fetchListener.onScheduleFetchAllOffersAndSaveAllIfNotExists();
-            }
-        };
-
-        timer.scheduleAtFixedRate(task, 0, 3 * 60 * 60 * 1000);
-    }
-
-    private void stopScheduler(){
-        timer.cancel();
+      fetchListener.onScheduleFetchAllOffersAndSaveAllIfNotExists();
     }
 
     public List<OfferReadModel> getAll(){

@@ -1,6 +1,7 @@
 package pl.iseebugs.JobOffers.feature;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
+import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,18 +9,22 @@ import pl.iseebugs.JobOffers.BaseIntegrationTest;
 import pl.iseebugs.JobOffers.SampleJobOfferResponse;
 import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
 import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetchable;
+import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetcherFacade;
+import pl.iseebugs.JobOffers.domain.scheduler.SchedulerFacade;
 
+import java.time.Duration;
 import java.util.List;
 
+import static org.awaitility.Awaitility.await;
+
+@Log4j2
 public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends BaseIntegrationTest implements SampleJobOfferResponse {
 
     @Autowired
-    OffersFetchable offersFetchable;
+    SchedulerFacade schedulerFacade;
 
     @Test
     void should_user_register_post_get_offers(){
-
-
 //   Step 1: There are no offers on in external HTTP server(http://ec2-3-120-147-150.eu-central-1.compute.amazonaws.com:5057/offers).
     // given
         wireMockServer.stubFor(WireMock.get("/offers")
@@ -27,9 +32,20 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
                         .withStatus(HttpStatus.OK.value())
                         .withHeader("Content-Type", "application/json")
                         .withBody(bodyWithZeroOffersJson())));
-        List<OfferWriteModel> result = offersFetchable.getOffers();
-
 //   Step 2: Scheduler ran 1st time and made GET to external server and system add 0 offers to database.
+    //given
+        await()
+                .atMost(Duration.ofSeconds(20))
+                .pollInterval(Duration.ofSeconds(1))
+                .until(() -> {
+                            try {
+                                log.info("start scheduler");
+                                return schedulerFacade.getAll().isEmpty();
+                            } catch (Exception e) {
+                                return false;
+                            }
+                        }
+                );
 //   Step 3: User tried to get JWT token by requesting POST /token with username-someUser, password=somePassword and system returned UNAUTHORIZED(401)
 //   Step 4: User made GET /offers with no jwt token and system returned UNAUTHORIZED(401)
 //   Step 5: user made POST /register with username=someUser, password=somePassword and system registered user with status OK(200)

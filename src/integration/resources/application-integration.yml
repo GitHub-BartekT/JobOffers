@@ -1,0 +1,3 @@
+job-offers:
+  offers-scheduler:
+    fetcherRunOccurrence: 1000
