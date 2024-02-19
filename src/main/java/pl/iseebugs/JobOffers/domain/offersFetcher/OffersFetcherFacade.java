@@ -2,6 +2,7 @@ package pl.iseebugs.JobOffers.domain.offersFetcher;
 
 import lombok.AllArgsConstructor;
 import pl.iseebugs.JobOffers.domain.scheduler.SchedulerFetchListener;
+import pl.iseebugs.JobOffers.projection.OfferReadModel;
 import pl.iseebugs.JobOffers.projection.OfferWriteModel;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class OffersFetcherFacade implements SchedulerFetchListener {
     private final IdGenerable idGenerable;
 
     @Override
-    public void onScheduleFetchAllOffersAndSaveAllIfNotExists() {
+    public List<OfferReadModel> onScheduleFetchAllOffersAndSaveAllIfNotExists() {
         List<OfferFetchEntity> currentOffers = fetcherRepository.getAll();
         List<OfferWriteModel> newOffers = offersFetchable.getOffers();
         List<OfferFetchEntity> addedOffers = new ArrayList<>();
@@ -33,9 +34,17 @@ public class OffersFetcherFacade implements SchedulerFetchListener {
                         .build());
             }
         }
-
+        List<OfferFetchEntity> savedOffers = new ArrayList<>();
         for (OfferFetchEntity offer : addedOffers) {
-            fetcherRepository.saveOffer(offer);
+            savedOffers.add(fetcherRepository.saveOffer(offer));
         }
+        return savedOffers.stream().map(offerFetchEntity -> OfferReadModel.builder()
+                .url(offerFetchEntity.url())
+                .id(offerFetchEntity.id())
+                .jobPosition(offerFetchEntity.jobPosition())
+                .companyName(offerFetchEntity.companyName())
+                .salaryLowerBound(offerFetchEntity.salaryLowerBound())
+                .salaryUpperBound(offerFetchEntity.salaryUpperBound())
+                .build()).toList();
     }
 }
