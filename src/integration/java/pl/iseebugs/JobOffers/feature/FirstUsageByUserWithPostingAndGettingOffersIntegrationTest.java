@@ -39,8 +39,8 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
                 .pollInterval(Duration.ofSeconds(1))
                 .until(() -> {
                             try {
-                                log.info("start scheduler");
-                                return schedulerFacade.getAll().isEmpty();
+                                schedulerFacade.startScheduler();
+                                return false;
                             } catch (Exception e) {
                                 return false;
                             }
