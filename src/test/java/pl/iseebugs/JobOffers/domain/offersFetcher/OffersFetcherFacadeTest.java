@@ -1,6 +1,7 @@
 package pl.iseebugs.JobOffers.domain.offersFetcher;
 
 import org.junit.jupiter.api.Test;
+import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
 
 import java.util.List;
 
@@ -19,11 +20,11 @@ class OffersFetcherFacadeTest {
         fetcherRepository.saveOffer(OfferFetch.builder().url("bar_url").build());
         OffersFetchable mockOffersFetchable = mock(OffersFetchable.class);
         when(mockOffersFetchable.getOffers()).thenReturn(List.of(
-                OfferFetch.builder()
+                OfferWriteModel.builder()
                         .url("external_foo").build(),
-                OfferFetch.builder()
+                OfferWriteModel.builder()
                         .url("external_bar").build(),
-                OfferFetch.builder()
+                OfferWriteModel.builder()
                         .url("foo_url").build()));
         OffersFetcherFacade toTest = FetcherConfiguration.offersFetcherFacade(fetcherRepository, mockOffersFetchable);
         //when
