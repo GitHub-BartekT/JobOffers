@@ -1,16 +1,17 @@
 package pl.iseebugs.JobOffers.domain.scheduler;
 
-import pl.iseebugs.JobOffers.domain.offers.projection.OfferReadModel;
+
+import pl.iseebugs.JobOffers.projection.OfferReadModel;
 
 class SchedulerMapper {
-    static OfferReadModel toOfferReadModel(OfferScheduler offerScheduler) {
+    static OfferReadModel toOfferReadModel(OfferSchedulerEntity offerSchedulerEntity) {
         return OfferReadModel.builder()
-                .id(offerScheduler.id())
-                .url(offerScheduler.url())
-                .jobPosition(offerScheduler.jobPosition())
-                .companyName(offerScheduler.companyName())
-                .salaryLowerBound(offerScheduler.salaryLowerBound())
-                .salaryUpperBound(offerScheduler.salaryUpperBound())
+                .id(offerSchedulerEntity.id())
+                .url(offerSchedulerEntity.url())
+                .jobPosition(offerSchedulerEntity.jobPosition())
+                .companyName(offerSchedulerEntity.companyName())
+                .salaryLowerBound(offerSchedulerEntity.salaryLowerBound())
+                .salaryUpperBound(offerSchedulerEntity.salaryUpperBound())
                 .build();
     }
 }

@@ -12,12 +12,12 @@ class FetcherConfiguration {
     FetcherRepository fetcherRepository(){
         return new FetcherRepository() {
             @Override
-            public OfferFetch saveOffer(OfferFetch offerFetch) {
+            public OfferFetchEntity saveOffer(OfferFetchEntity offerFetchEntity) {
                 return null;
             }
 
             @Override
-            public List<OfferFetch> getAll() {
+            public List<OfferFetchEntity> getAll() {
                 return null;
             }
         };

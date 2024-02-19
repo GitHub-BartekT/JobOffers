@@ -1,8 +1,9 @@
 package pl.iseebugs.JobOffers.domain.offers;
 
 import lombok.AllArgsConstructor;
-import pl.iseebugs.JobOffers.domain.offers.projection.OfferReadModel;
-import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
+
+import pl.iseebugs.JobOffers.projection.OfferWriteModel;
+import pl.iseebugs.JobOffers.projection.OfferReadModel;
 import pl.iseebugs.JobOffers.domain.scheduler.SchedulerFacade;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class OffersFacade {
             throw new IllegalArgumentException("Offer with that Id already exists");
         }
 
-        Offer toSave = Offer.builder()
+        OfferEntity toSave = OfferEntity.builder()
                 .id(idGenerable.createNewId())
                 .url(offerWriteModel.getUrl())
                 .jobPosition(offerWriteModel.getJobPosition())

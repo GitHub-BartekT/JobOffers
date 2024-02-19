@@ -6,20 +6,20 @@ import java.util.Map;
 import java.util.Optional;
 
 class InMemoryRepositoryOffersTestImpl implements OffersRepository{
-    Map<String, Offer> inMemoryRepository = new HashMap<>();
+    Map<String, OfferEntity> inMemoryRepository = new HashMap<>();
 
     @Override
-    public Optional<Offer> getById(String id) {
+    public Optional<OfferEntity> getById(String id) {
         return Optional.ofNullable(inMemoryRepository.get(id));
     }
 
     @Override
-    public List<Offer> getAll() {
+    public List<OfferEntity> getAll() {
         return inMemoryRepository.values().stream().toList();
     }
 
     @Override
-    public Offer save(Offer entity) {
+    public OfferEntity save(OfferEntity entity) {
         inMemoryRepository.put(entity.id(), entity);
         return inMemoryRepository.get(entity.id());
     }
@@ -31,6 +31,6 @@ class InMemoryRepositoryOffersTestImpl implements OffersRepository{
 
     @Override
     public boolean existsByUrl(String url) {
-        return inMemoryRepository.values().stream().anyMatch(offer -> offer.url().equals(url));
+        return inMemoryRepository.values().stream().anyMatch(offerEntity -> offerEntity.url().equals(url));
     }
 }

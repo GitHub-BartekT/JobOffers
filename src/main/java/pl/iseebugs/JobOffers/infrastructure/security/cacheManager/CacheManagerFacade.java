@@ -1,7 +1,7 @@
 package pl.iseebugs.JobOffers.infrastructure.security.cacheManager;
 
 import org.springframework.stereotype.Component;
-import pl.iseebugs.JobOffers.domain.offers.projection.OfferReadModel;
+import pl.iseebugs.JobOffers.projection.OfferReadModel;
 import java.util.List;
 @Component
 public class CacheManagerFacade {

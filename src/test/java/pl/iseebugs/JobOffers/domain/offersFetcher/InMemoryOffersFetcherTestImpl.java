@@ -3,18 +3,17 @@ package pl.iseebugs.JobOffers.domain.offersFetcher;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class InMemoryOffersFetcherTestImpl implements FetcherRepository{
-    Map<String, OfferFetch> inMemoryRepository = new HashMap<>();
+    Map<String, OfferFetchEntity> inMemoryRepository = new HashMap<>();
 
     @Override
-    public OfferFetch saveOffer(OfferFetch offerFetch) {
-        return inMemoryRepository.put(offerFetch.id(), offerFetch);
+    public OfferFetchEntity saveOffer(OfferFetchEntity offerFetchEntity) {
+        return inMemoryRepository.put(offerFetchEntity.id(), offerFetchEntity);
     }
 
     @Override
-    public List<OfferFetch> getAll() {
+    public List<OfferFetchEntity> getAll() {
         return inMemoryRepository.values().stream().toList();
     }
 }

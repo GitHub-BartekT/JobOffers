@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import pl.iseebugs.JobOffers.BaseIntegrationTest;
 import pl.iseebugs.JobOffers.SampleJobOfferResponse;
-import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
-import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetchable;
-import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetcherFacade;
 import pl.iseebugs.JobOffers.domain.scheduler.SchedulerFacade;
 
 import java.time.Duration;

@@ -1,10 +1,9 @@
 package pl.iseebugs.JobOffers.domain.offersFetcher;
 
 import java.util.List;
-import java.util.Optional;
 
 interface FetcherRepository {
-    OfferFetch saveOffer(OfferFetch offerFetch);
+    OfferFetchEntity saveOffer(OfferFetchEntity offerFetchEntity);
 
-    List<OfferFetch> getAll();
+    List<OfferFetchEntity> getAll();
 }

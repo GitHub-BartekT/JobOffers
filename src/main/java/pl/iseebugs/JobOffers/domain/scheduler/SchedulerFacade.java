@@ -1,17 +1,15 @@
 package pl.iseebugs.JobOffers.domain.scheduler;
 
-import lombok.Value;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.Scheduled;
-import pl.iseebugs.JobOffers.domain.offers.projection.OfferReadModel;
 import pl.iseebugs.JobOffers.infrastructure.security.cacheManager.CacheManagerFacade;
+import pl.iseebugs.JobOffers.projection.OfferReadModel;
 
 import java.text.SimpleDateFormat;
 import java.time.Clock;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+
 @Log4j2
 public class SchedulerFacade {
 

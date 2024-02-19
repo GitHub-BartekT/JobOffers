@@ -1,8 +1,8 @@
 package pl.iseebugs.JobOffers.domain.offersFetcher;
 
 import lombok.AllArgsConstructor;
-import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
 import pl.iseebugs.JobOffers.domain.scheduler.SchedulerFetchListener;
+import pl.iseebugs.JobOffers.projection.OfferWriteModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +16,14 @@ public class OffersFetcherFacade implements SchedulerFetchListener {
 
     @Override
     public void onScheduleFetchAllOffersAndSaveAllIfNotExists() {
-        List<OfferFetch> currentOffers = fetcherRepository.getAll();
+        List<OfferFetchEntity> currentOffers = fetcherRepository.getAll();
         List<OfferWriteModel> newOffers = offersFetchable.getOffers();
-        List<OfferFetch> addedOffers = new ArrayList<>();
+        List<OfferFetchEntity> addedOffers = new ArrayList<>();
 
         for (OfferWriteModel offer: newOffers) {
             if (currentOffers.stream()
                     .noneMatch(offerFetch -> offerFetch.url().equals(offer.getUrl()))){
-                addedOffers.add(OfferFetch.builder()
+                addedOffers.add(OfferFetchEntity.builder()
                         .id(idGenerable.createNewId())
                         .companyName(offer.getCompanyName())
                         .jobPosition(offer.getJobPosition())
@@ -34,7 +34,7 @@ public class OffersFetcherFacade implements SchedulerFetchListener {
             }
         }
 
-        for (OfferFetch offer : addedOffers) {
+        for (OfferFetchEntity offer : addedOffers) {
             fetcherRepository.saveOffer(offer);
         }
     }

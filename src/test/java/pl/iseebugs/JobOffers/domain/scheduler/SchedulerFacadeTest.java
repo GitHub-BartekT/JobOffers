@@ -2,7 +2,7 @@ package pl.iseebugs.JobOffers.domain.scheduler;
 
 import org.junit.jupiter.api.Test;
 import pl.iseebugs.JobOffers.AdjustableClock;
-import pl.iseebugs.JobOffers.domain.offers.projection.OfferReadModel;
+import pl.iseebugs.JobOffers.projection.OfferReadModel;
 import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetcherFacade;
 import pl.iseebugs.JobOffers.infrastructure.security.cacheManager.CacheManagerFacade;
 
@@ -52,15 +52,15 @@ class SchedulerFacadeTest {
     private static SchedulerFacade SchedulerFacadeTestConfiguration() {
         SchedulerRepository mockInMemoryRepository =mock(SchedulerRepository.class);
         when(mockInMemoryRepository.getAll()).thenReturn(List.of(
-                OfferScheduler.builder()
+                OfferSchedulerEntity.builder()
                         .id("Repository_id_1")
                         .url("url_3")
                         .build(),
-                OfferScheduler.builder()
+                OfferSchedulerEntity.builder()
                         .id("Repository_id_2")
                         .url("url_4")
                         .build(),
-                OfferScheduler.builder()
+                OfferSchedulerEntity.builder()
                         .id("Repository_id_3")
                         .url("url_5")
                         .build()

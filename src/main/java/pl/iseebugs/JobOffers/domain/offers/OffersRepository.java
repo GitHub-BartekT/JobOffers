@@ -5,11 +5,11 @@ import java.util.Optional;
 
 interface OffersRepository {
 
-    Optional<Offer> getById(String id);
+    Optional<OfferEntity> getById(String id);
 
-    List<Offer> getAll();
+    List<OfferEntity> getAll();
 
-    Offer save(Offer entity);
+    OfferEntity save(OfferEntity entity);
 
     boolean existsById(String id);
 

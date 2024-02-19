@@ -1,17 +1,16 @@
 package pl.iseebugs.JobOffers.domain.offers;
 
-import pl.iseebugs.JobOffers.domain.offers.projection.OfferReadModel;
-import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
+import pl.iseebugs.JobOffers.projection.OfferReadModel;
 
 class OfferMapper {
-    static OfferReadModel toOfferReadModel(Offer offer){
+    static OfferReadModel toOfferReadModel(OfferEntity offerEntity){
         return OfferReadModel.builder()
-                .id(offer.id())
-                .url(offer.url())
-                .jobPosition(offer.jobPosition())
-                .companyName(offer.companyName())
-                .salaryLowerBound(offer.salaryLowerBound())
-                .salaryUpperBound(offer.salaryUpperBound())
+                .id(offerEntity.id())
+                .url(offerEntity.url())
+                .jobPosition(offerEntity.jobPosition())
+                .companyName(offerEntity.companyName())
+                .salaryLowerBound(offerEntity.salaryLowerBound())
+                .salaryUpperBound(offerEntity.salaryUpperBound())
                 .build();
     }
 }

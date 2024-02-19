@@ -7,8 +7,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
-import pl.iseebugs.JobOffers.domain.offers.projection.OfferReadModel;
-import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
+import pl.iseebugs.JobOffers.projection.OfferReadModel;
+import pl.iseebugs.JobOffers.projection.OfferWriteModel;
 import pl.iseebugs.JobOffers.domain.scheduler.SchedulerFacade;
 
 import java.util.List;

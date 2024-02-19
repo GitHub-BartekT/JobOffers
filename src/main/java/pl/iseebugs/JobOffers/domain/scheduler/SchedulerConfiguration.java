@@ -15,7 +15,7 @@ class SchedulerConfiguration {
     SchedulerRepository schedulerRepository(){
         return new SchedulerRepository() {
             @Override
-            public List<OfferScheduler> getAll() {
+            public List<OfferSchedulerEntity> getAll() {
                 return null;
             }
         };

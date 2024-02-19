@@ -9,12 +9,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
-import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
+import pl.iseebugs.JobOffers.projection.OfferWriteModel;
 import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetchable;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Log4j2
