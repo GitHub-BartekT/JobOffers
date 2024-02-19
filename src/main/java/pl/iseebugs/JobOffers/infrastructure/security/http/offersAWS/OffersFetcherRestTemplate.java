@@ -7,7 +7,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
 import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetchable;
 
@@ -34,6 +33,7 @@ public class OffersFetcherRestTemplate implements OffersFetchable {
                 });
         List<OffersAWSDto> offers = response.getBody();
         List<OfferWriteModel> result = offers.stream().map(offersAWSDto -> OfferWriteModel.builder()
+                .url(offersAWSDto.offerUrl())
                 .jobPosition(offersAWSDto.title())
                 .companyName(offersAWSDto.company())
                 .build()).toList();
