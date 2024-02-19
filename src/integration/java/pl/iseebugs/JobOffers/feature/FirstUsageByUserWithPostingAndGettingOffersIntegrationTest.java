@@ -5,12 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import pl.iseebugs.JobOffers.BaseIntegrationTest;
+import pl.iseebugs.JobOffers.SampleJobOfferResponse;
 import pl.iseebugs.JobOffers.domain.offers.projection.OfferWriteModel;
 import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetchable;
 
 import java.util.List;
 
-public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends BaseIntegrationTest {
+public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends BaseIntegrationTest implements SampleJobOfferResponse {
 
     @Autowired
     OffersFetchable offersFetchable;
@@ -25,10 +26,7 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
                 .willReturn(WireMock.aResponse()
                         .withStatus(HttpStatus.OK.value())
                         .withHeader("Content-Type", "application/json")
-                        .withBody("""
-[{"title":"Junior Java Developer","company":"BlueSoft Sp. z o.o.","salary":"7 000 – 9 000 PLN","offerUrl":"https://nofluffjobs.com/pl/job/junior-java-developer-bluesoft-remote-hfuanrre"},
-{"title":"Java (CMS) Developer","company":"Efigence SA","salary":"16 000 – 18 000 PLN","offerUrl":"https://nofluffjobs.com/pl/job/java-cms-developer-efigence-warszawa-b4qs8loh"}]""".trim()
-                        )));
+                        .withBody(bodyWithZeroOffersJson())));
         List<OfferWriteModel> result = offersFetchable.getOffers();
 
 //   Step 2: Scheduler ran 1st time and made GET to external server and system add 0 offers to database.
