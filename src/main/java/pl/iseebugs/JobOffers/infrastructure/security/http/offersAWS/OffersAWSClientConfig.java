@@ -1,5 +1,6 @@
 package pl.iseebugs.JobOffers.infrastructure.security.http.offersAWS;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,9 @@ import java.time.Duration;
 @Configuration
 public class OffersAWSClientConfig {
 
+    @Autowired
+    OfferAWSFetcherClientProperties properties;
+
     @Bean
     public RestTemplateResponseErrorHandler restTemplateResponseErrorHandler(){
         return new RestTemplateResponseErrorHandler();
@@ -22,15 +26,13 @@ public class OffersAWSClientConfig {
     public RestTemplate restTemplate(RestTemplateResponseErrorHandler restTemplateResponseErrorHandler){
         return new RestTemplateBuilder()
                 .errorHandler(restTemplateResponseErrorHandler)
-                .setConnectTimeout(Duration.ofMillis(1000))
-                .setReadTimeout(Duration.ofMillis(1000))
+                .setConnectTimeout(Duration.ofMillis(properties.connectionTimeout()))
+                .setReadTimeout(Duration.ofMillis(properties.readTimeout()))
                 .build();
     }
 
     @Bean
-    public OffersFetchable remoteNumberGeneratorClient(RestTemplate restTemplate,
-                                                       @Value("${job-offers.offers-fetcher.http.client.config.uri}") String uri,
-                                                       @Value("${job-offers.offers-fetcher.http.client.config.port}") int port){
-        return new OffersFetcherRestTemplate(restTemplate, uri, port);
+    public OffersFetchable remoteNumberGeneratorClient(RestTemplate restTemplate){
+        return new OffersFetcherRestTemplate(restTemplate, properties.uri(), properties.port());
     }
 }
