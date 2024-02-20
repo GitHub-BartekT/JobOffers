@@ -3,7 +3,7 @@ package pl.iseebugs.JobOffers.domain.scheduler;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.iseebugs.JobOffers.infrastructure.security.cacheManager.CacheManagerFacade;
+import pl.iseebugs.JobOffers.infrastructure.cacheManager.CacheManagerFacade;
 
 import java.time.Clock;
 import java.util.List;

@@ -1,13 +1,12 @@
-package pl.iseebugs.JobOffers.infrastructure.security.http.offersAWS;
+package pl.iseebugs.JobOffers.infrastructure.http.offersAWS;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetchable;
-import pl.iseebugs.JobOffers.infrastructure.security.http.RestTemplateResponseErrorHandler;
+import pl.iseebugs.JobOffers.infrastructure.http.RestTemplateResponseErrorHandler;
 
 import java.time.Duration;
 

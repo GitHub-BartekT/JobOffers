@@ -1,4 +1,4 @@
-package pl.iseebugs.JobOffers.infrastructure.security.cacheManager;
+package pl.iseebugs.JobOffers.infrastructure.cacheManager;
 
 import org.springframework.stereotype.Component;
 import pl.iseebugs.JobOffers.projection.OfferReadModel;
