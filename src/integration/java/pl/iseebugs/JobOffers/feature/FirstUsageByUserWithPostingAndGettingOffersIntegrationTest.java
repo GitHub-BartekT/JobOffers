@@ -8,9 +8,12 @@ import org.springframework.http.HttpStatus;
 import pl.iseebugs.JobOffers.BaseIntegrationTest;
 import pl.iseebugs.JobOffers.SampleJobOfferResponse;
 import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetcherFacade;
+import pl.iseebugs.JobOffers.projection.OfferReadModel;
 
 import java.time.Duration;
+import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 @Log4j2
@@ -28,11 +31,17 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
                         .withStatus(HttpStatus.OK.value())
                         .withHeader("Content-Type", "application/json")
                         .withBody(bodyWithZeroOffersJson())));
+
+
 //   Step 2: Scheduler ran 1st time and made GET to external server and system add 0 offers to database.
-    //given
-        offersFetcherFacade.onScheduleFetchAllOffersAndSaveAllIfNotExists();
+    //given && when
+        List<OfferReadModel> offers = offersFetcherFacade.onScheduleFetchAllOffersAndSaveAllIfNotExists();
+    //then
+        assertThat(offers.isEmpty()).isTrue();
+
 
 //   Step 3: User tried to get JWT token by requesting POST /token with username-someUser, password=somePassword and system returned UNAUTHORIZED(401)
+
 //   Step 4: User made GET /offers with no jwt token and system returned UNAUTHORIZED(401)
 //   Step 5: user made POST /register with username=someUser, password=somePassword and system registered user with status OK(200)
 //   Step 6: user tried to get JWT token by requesting POST /token with username=someUser, password=somePassword and system returned OK(200) and jwttoken=AAAA.BBBB.CCC
