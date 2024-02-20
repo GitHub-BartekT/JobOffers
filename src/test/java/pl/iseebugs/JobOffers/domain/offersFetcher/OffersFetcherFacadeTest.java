@@ -15,8 +15,8 @@ class OffersFetcherFacadeTest {
     void should_return_list_with_additional_offers_when_exist_new_offers(){
         //given
         FetcherRepository fetcherRepository = new InMemoryOffersFetcherTestImpl();
-        fetcherRepository.saveOffer(OfferFetchEntity.builder().url("foo_url").build());
-        fetcherRepository.saveOffer(OfferFetchEntity.builder().url("bar_url").build());
+        fetcherRepository.saveOffer(OfferFetchEntity.builder().id("foo_id").url("foo_url").build());
+        fetcherRepository.saveOffer(OfferFetchEntity.builder().id("bar_id").url("bar_url").build());
         OffersFetchable mockOffersFetchable = mock(OffersFetchable.class);
         when(mockOffersFetchable.getOffers()).thenReturn(List.of(
                 OfferWriteModel.builder()

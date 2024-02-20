@@ -12,16 +12,6 @@ import java.util.List;
 class SchedulerConfiguration {
 
     @Bean
-    SchedulerRepository schedulerRepository(){
-        return new SchedulerRepository() {
-            @Override
-            public List<OfferSchedulerEntity> getAll() {
-                return null;
-            }
-        };
-    }
-
-    @Bean
     static SchedulerFacade toSchedulerFacade(SchedulerRepository repository,
                                              CacheManagerFacade cacheManagerFacade,
                                              SchedulerFetchListener fetchListener

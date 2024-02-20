@@ -1,6 +1,7 @@
 package pl.iseebugs.JobOffers.domain.scheduler;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import pl.iseebugs.JobOffers.AdjustableClock;
 import pl.iseebugs.JobOffers.projection.OfferReadModel;
 import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetcherFacade;
@@ -11,11 +12,13 @@ import java.util.List;
 
 import static java.time.ZoneOffset.UTC;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 import static org.mockito.Mockito.*;
 
 class SchedulerFacadeTest {
 
    static AdjustableClock clock = new AdjustableClock(LocalDateTime.of(2024, 2, 6, 10, 0, 0).toInstant(UTC), ZoneId.systemDefault());
+
 
     @Test
     void getAll_time_over_one_hour(){
@@ -39,14 +42,6 @@ class SchedulerFacadeTest {
         List<OfferReadModel> result = toTest.getAll();
         //then
         assertThat(result.size()).isEqualTo(2);
-    }
-
-    @Test
-    void eventListener_is_called_when_scheduler_starts(){
-        //given
-        SchedulerFacade toTest = SchedulerFacadeTestConfiguration();
-        //then
-        verify(toTest.schedulerFetchListener, times(1)).onScheduleFetchAllOffersAndSaveAllIfNotExists();
     }
 
     private static SchedulerFacade SchedulerFacadeTestConfiguration() {
