@@ -1,3 +1,6 @@
 job-offers:
   offers-scheduler:
-    fetcherRunOccurrence: "*/1 * * * * *"
+    fetcherRunOccurrence: PT1S
+
+scheduling:
+  enabled: false

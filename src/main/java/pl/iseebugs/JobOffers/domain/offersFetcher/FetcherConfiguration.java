@@ -13,7 +13,7 @@ class FetcherConfiguration {
         return new FetcherRepository() {
             @Override
             public OfferFetchEntity saveOffer(OfferFetchEntity offerFetchEntity) {
-                return null;
+                return offerFetchEntity;
             }
 
             @Override

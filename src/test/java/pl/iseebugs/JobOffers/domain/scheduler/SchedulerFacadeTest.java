@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import pl.iseebugs.JobOffers.AdjustableClock;
 import pl.iseebugs.JobOffers.projection.OfferReadModel;
 import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetcherFacade;
-import pl.iseebugs.JobOffers.infrastructure.security.cacheManager.CacheManagerFacade;
+import pl.iseebugs.JobOffers.infrastructure.cacheManager.CacheManagerFacade;
 
 import java.time.*;
 import java.util.List;
@@ -46,7 +46,7 @@ class SchedulerFacadeTest {
         //given
         SchedulerFacade toTest = SchedulerFacadeTestConfiguration();
         //then
-        verify(toTest.fetchListener, times(1)).onScheduleFetchAllOffersAndSaveAllIfNotExists();
+        verify(toTest.schedulerFetchListener, times(1)).onScheduleFetchAllOffersAndSaveAllIfNotExists();
     }
 
     private static SchedulerFacade SchedulerFacadeTestConfiguration() {

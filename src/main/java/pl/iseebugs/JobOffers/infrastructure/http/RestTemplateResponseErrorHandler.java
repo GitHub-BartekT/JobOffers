@@ -1,4 +1,4 @@
-package pl.iseebugs.JobOffers.infrastructure.security.http;
+package pl.iseebugs.JobOffers.infrastructure.http;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatus.Series;

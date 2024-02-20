@@ -1,4 +1,4 @@
-package pl.iseebugs.JobOffers.infrastructure.security.http.offersAWS;
+package pl.iseebugs.JobOffers.infrastructure.http.offersAWS;
 
 import lombok.Builder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
