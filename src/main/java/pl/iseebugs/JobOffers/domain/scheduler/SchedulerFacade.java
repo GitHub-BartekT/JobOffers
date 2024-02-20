@@ -47,7 +47,7 @@ public class SchedulerFacade {
 
     private List<OfferReadModel> getAllFromDB(){
         cacheManagerFacade.updateCache();
-        return schedulerRepository.getAll().stream()
+        return schedulerRepository.findAll().stream()
                 .map(SchedulerMapper::toOfferReadModel)
                 .toList();
     }

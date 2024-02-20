@@ -1,7 +1,10 @@
 package pl.iseebugs.JobOffers.domain.scheduler;
 
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
-interface SchedulerRepository {
-    List<OfferSchedulerEntity> getAll();
+@Repository
+interface SchedulerRepository extends MongoRepository<OfferSchedulerEntity, String> {
 }

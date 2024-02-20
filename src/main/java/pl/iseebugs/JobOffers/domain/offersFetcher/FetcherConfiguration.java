@@ -9,21 +9,6 @@ import java.util.List;
 class FetcherConfiguration {
 
     @Bean
-    FetcherRepository fetcherRepository(){
-        return new FetcherRepository() {
-            @Override
-            public OfferFetchEntity saveOffer(OfferFetchEntity offerFetchEntity) {
-                return offerFetchEntity;
-            }
-
-            @Override
-            public List<OfferFetchEntity> getAll() {
-                return null;
-            }
-        };
-    }
-
-    @Bean
     static OffersFetcherFacade offersFetcherFacade(FetcherRepository repository, OffersFetchable offersFetchable){
         IdGenerable idGenerator = new IdGeneratorUUID();
         return new OffersFetcherFacade(repository, offersFetchable, idGenerator);

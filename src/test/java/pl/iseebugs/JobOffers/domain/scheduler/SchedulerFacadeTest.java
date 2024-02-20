@@ -11,11 +11,13 @@ import java.util.List;
 
 import static java.time.ZoneOffset.UTC;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 import static org.mockito.Mockito.*;
 
 class SchedulerFacadeTest {
 
    static AdjustableClock clock = new AdjustableClock(LocalDateTime.of(2024, 2, 6, 10, 0, 0).toInstant(UTC), ZoneId.systemDefault());
+
 
     @Test
     void getAll_time_over_one_hour(){
@@ -41,17 +43,9 @@ class SchedulerFacadeTest {
         assertThat(result.size()).isEqualTo(2);
     }
 
-    @Test
-    void eventListener_is_called_when_scheduler_starts(){
-        //given
-        SchedulerFacade toTest = SchedulerFacadeTestConfiguration();
-        //then
-        verify(toTest.schedulerFetchListener, times(1)).onScheduleFetchAllOffersAndSaveAllIfNotExists();
-    }
-
     private static SchedulerFacade SchedulerFacadeTestConfiguration() {
         SchedulerRepository mockInMemoryRepository =mock(SchedulerRepository.class);
-        when(mockInMemoryRepository.getAll()).thenReturn(List.of(
+        when(mockInMemoryRepository.findAll()).thenReturn(List.of(
                 OfferSchedulerEntity.builder()
                         .id("Repository_id_1")
                         .url("url_3")

@@ -1,9 +1,8 @@
 package pl.iseebugs.JobOffers.domain.offersFetcher;
 
-import java.util.List;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-interface FetcherRepository {
-    OfferFetchEntity saveOffer(OfferFetchEntity offerFetchEntity);
-
-    List<OfferFetchEntity> getAll();
+@Repository
+interface FetcherRepository extends MongoRepository<OfferFetchEntity, String> {
 }
