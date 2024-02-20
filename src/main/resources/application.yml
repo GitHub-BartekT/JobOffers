@@ -4,7 +4,7 @@ spring:
       uri: mongodb://admin:admin@localhost:27017/job-offers-web
 job-offers:
   offers-scheduler:
-    fetcherRunOccurrence: 10_800_000
+    fetcherRunOccurrence: "*/1 * * * * *"
   offers-fetcher:
     http:
       client:

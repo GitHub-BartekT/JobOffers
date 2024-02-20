@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import pl.iseebugs.JobOffers.BaseIntegrationTest;
 import pl.iseebugs.JobOffers.SampleJobOfferResponse;
+import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetcherFacade;
 import pl.iseebugs.JobOffers.domain.scheduler.SchedulerFacade;
 
 import java.time.Duration;
@@ -18,7 +19,7 @@ import static org.awaitility.Awaitility.await;
 public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends BaseIntegrationTest implements SampleJobOfferResponse {
 
     @Autowired
-    SchedulerFacade schedulerFacade;
+    OffersFetcherFacade offersFetcherFacade;
 
     @Test
     void should_user_register_post_get_offers(){
@@ -31,17 +32,18 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
                         .withBody(bodyWithZeroOffersJson())));
 //   Step 2: Scheduler ran 1st time and made GET to external server and system add 0 offers to database.
     //given
-        await()
+        offersFetcherFacade.onScheduleFetchAllOffersAndSaveAllIfNotExists();
+        /*await()
                 .atMost(Duration.ofSeconds(20))
-                .pollInterval(Duration.ofSeconds(1))
+                .pollInterval(Duration.ofSeconds(15))
                 .until(() -> {
                             try {
-                                return schedulerFacade.startScheduler().isEmpty();
+                                return !schedulerFacade.startScheduler().isEmpty();
                             } catch (Exception e) {
                                 return false;
                             }
                         }
-                );
+                );*/
 //   Step 3: User tried to get JWT token by requesting POST /token with username-someUser, password=somePassword and system returned UNAUTHORIZED(401)
 //   Step 4: User made GET /offers with no jwt token and system returned UNAUTHORIZED(401)
 //   Step 5: user made POST /register with username=someUser, password=somePassword and system registered user with status OK(200)

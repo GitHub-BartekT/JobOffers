@@ -29,7 +29,7 @@ public class SchedulerFacade {
 
     @Scheduled(cron = "${job-offers.offers-scheduler.fetcherRunOccurrence}")
     public List<OfferReadModel> startScheduler(){
-        log.info("Started offers fetching {}", dateFormat.format(new Date()));
+        log.info("Started scheduler {}", dateFormat.format(new Date()));
         return fetchListener.onScheduleFetchAllOffersAndSaveAllIfNotExists();
     }
 

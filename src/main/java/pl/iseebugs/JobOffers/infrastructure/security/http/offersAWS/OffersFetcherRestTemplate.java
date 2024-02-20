@@ -32,6 +32,7 @@ public class OffersFetcherRestTemplate implements OffersFetchable {
 
         try{
         String url = getUrlForService("/offers");
+        log.info("url: {}", url);
         ResponseEntity<List<OffersAWSDto>> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
