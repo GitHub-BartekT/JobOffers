@@ -7,6 +7,7 @@ import java.util.List;
 
 @Configuration
 class FetcherConfiguration {
+
     @Bean
     static OffersFetcherFacade offersFetcherFacade(FetcherRepository repository, OffersFetchable offersFetchable){
         IdGenerable idGenerator = new IdGeneratorUUID();

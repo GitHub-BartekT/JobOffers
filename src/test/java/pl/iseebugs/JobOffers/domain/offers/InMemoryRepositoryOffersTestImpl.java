@@ -21,11 +21,6 @@ class InMemoryRepositoryOffersTestImpl implements OffersRepository{
     }
 
     @Override
-    public List<OfferEntity> getAll() {
-        return inMemoryRepository.values().stream().toList();
-    }
-
-    @Override
     public OfferEntity save(OfferEntity entity) {
         inMemoryRepository.put(entity.id(), entity);
         return inMemoryRepository.get(entity.id());

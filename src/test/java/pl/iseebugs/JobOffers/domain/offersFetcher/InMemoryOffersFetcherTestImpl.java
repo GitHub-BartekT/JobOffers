@@ -15,14 +15,13 @@ import java.util.function.Function;
 public class InMemoryOffersFetcherTestImpl implements FetcherRepository{
     Map<String, OfferFetchEntity> inMemoryRepository = new HashMap<>();
 
-    @Override
-    public OfferFetchEntity saveOffer(OfferFetchEntity offerFetchEntity) {
+    public OfferFetchEntity save(OfferFetchEntity offerFetchEntity) {
         inMemoryRepository.put(offerFetchEntity.id(), offerFetchEntity);
         return offerFetchEntity;
     }
 
     @Override
-    public List<OfferFetchEntity> getAll() {
+    public List<OfferFetchEntity> findAll() {
         return inMemoryRepository.values().stream().toList();
     }
 
@@ -71,10 +70,7 @@ public class InMemoryOffersFetcherTestImpl implements FetcherRepository{
         return null;
     }
 
-    @Override
-    public <S extends OfferFetchEntity> S save(S entity) {
-        return null;
-    }
+
 
     @Override
     public <S extends OfferFetchEntity> List<S> saveAll(Iterable<S> entities) {
@@ -89,11 +85,6 @@ public class InMemoryOffersFetcherTestImpl implements FetcherRepository{
     @Override
     public boolean existsById(String string) {
         return false;
-    }
-
-    @Override
-    public List<OfferFetchEntity> findAll() {
-        return null;
     }
 
     @Override

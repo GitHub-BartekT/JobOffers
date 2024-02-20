@@ -51,7 +51,7 @@ public class OffersFetcherRestTemplate implements OffersFetchable {
                 .jobPosition(offersAWSDto.title())
                 .companyName(offersAWSDto.company())
                 .build()).toList();
-        log.info("Success response body returned");
+        log.info("Success response body returned with {} offers", result.size());
         return result;
         } catch (ResourceAccessException e){
             log.error("Error while fetching offers using http client:" + e.getMessage());

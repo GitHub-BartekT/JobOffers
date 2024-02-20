@@ -1,7 +1,6 @@
 package pl.iseebugs.JobOffers.domain.scheduler;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import pl.iseebugs.JobOffers.AdjustableClock;
 import pl.iseebugs.JobOffers.projection.OfferReadModel;
 import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetcherFacade;
@@ -46,7 +45,7 @@ class SchedulerFacadeTest {
 
     private static SchedulerFacade SchedulerFacadeTestConfiguration() {
         SchedulerRepository mockInMemoryRepository =mock(SchedulerRepository.class);
-        when(mockInMemoryRepository.getAll()).thenReturn(List.of(
+        when(mockInMemoryRepository.findAll()).thenReturn(List.of(
                 OfferSchedulerEntity.builder()
                         .id("Repository_id_1")
                         .url("url_3")

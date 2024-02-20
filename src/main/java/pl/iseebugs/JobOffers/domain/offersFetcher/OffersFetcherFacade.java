@@ -17,7 +17,7 @@ public class OffersFetcherFacade implements SchedulerFetchListener {
 
     @Override
     public List<OfferReadModel> onScheduleFetchAllOffersAndSaveAllIfNotExists() {
-        List<OfferFetchEntity> currentOffers = fetcherRepository.getAll();
+        List<OfferFetchEntity> currentOffers = fetcherRepository.findAll();
         List<OfferWriteModel> newOffers = offersFetchable.getOffers();
         List<OfferFetchEntity> addedOffers = new ArrayList<>();
 
@@ -36,7 +36,7 @@ public class OffersFetcherFacade implements SchedulerFetchListener {
         }
         List<OfferFetchEntity> savedOffers = new ArrayList<>();
         for (OfferFetchEntity offer : addedOffers) {
-            savedOffers.add(fetcherRepository.saveOffer(offer));
+            savedOffers.add(fetcherRepository.save(offer));
         }
         return savedOffers.stream().map(offerFetchEntity -> OfferReadModel.builder()
                 .url(offerFetchEntity.url())

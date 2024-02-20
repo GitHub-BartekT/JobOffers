@@ -7,5 +7,4 @@ import java.util.List;
 
 @Repository
 interface SchedulerRepository extends MongoRepository<OfferSchedulerEntity, String> {
-    List<OfferSchedulerEntity> getAll();
 }

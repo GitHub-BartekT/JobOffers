@@ -30,9 +30,6 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
                         .withBody(bodyWithZeroOffersJson())));
 //   Step 2: Scheduler ran 1st time and made GET to external server and system add 0 offers to database.
     //given
-        await().
-                atMost(Duration.ofSeconds(20))
-                        .until(() -> false);
         offersFetcherFacade.onScheduleFetchAllOffersAndSaveAllIfNotExists();
 
 //   Step 3: User tried to get JWT token by requesting POST /token with username-someUser, password=somePassword and system returned UNAUTHORIZED(401)
