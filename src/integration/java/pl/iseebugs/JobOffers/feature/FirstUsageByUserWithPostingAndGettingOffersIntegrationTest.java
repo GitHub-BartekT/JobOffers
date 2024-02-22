@@ -66,6 +66,7 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
                 () -> assertThat(offersFromBackend.offerReadModels()).isNotNull()
                 );
 
+
 //   Step 8: there are 2 new offers in external HTTP server
 //   Step 9: scheduler ran 2nd time and made GET to external server and system added 2 new offers with ids: 1000 and 2000 to database
 //   Step 10: user made GET /offers with header “Authorization: Bearer AAAA.BBBB.CCC” and system returned OK(200) with 2 offers with ids: 1000 and 2000

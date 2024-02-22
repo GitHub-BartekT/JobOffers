@@ -2,6 +2,7 @@ package pl.iseebugs.JobOffers.infrastructure.offers.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +16,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/offers")
 @AllArgsConstructor
+@Log4j2
 public class OfferController {
 
     private final OffersFacade offersFacade;
 
     @GetMapping
-    ResponseEntity <AllOffersReadModel> readAllOffers(){
+    ResponseEntity <List<OfferReadModel>> readAllOffers(){
+        log.info("Controller. Request readAll /offers");
         List<OfferReadModel> offers = offersFacade.getAll();
         AllOffersReadModel response = AllOffersReadModel.builder()
                 .offerReadModels(offers).build();
-        return ResponseEntity.ok(response);
+        log.info("Taken {} offers", offers.size());
+        return ResponseEntity.ok(offers);
     }
 }
