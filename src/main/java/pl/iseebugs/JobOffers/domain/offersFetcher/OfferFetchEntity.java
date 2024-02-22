@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Builder
-@Document
+@Document(collection = "savedOffers")
 record OfferFetchEntity(
         @Id
         String id, String url, String jobPosition, String companyName, double salaryLowerBound, double salaryUpperBound) {
