@@ -10,4 +10,8 @@ public class CacheManagerFacade {
     public boolean updateCache(){
         return false;
     }
+
+    public boolean isEmpty(){
+        return true;
+    }
 }

@@ -34,6 +34,10 @@ public class SchedulerFacade {
     }
 
     public List<OfferReadModel> getAll(){
+        if (cacheManagerFacade.isEmpty()){
+            return getAllFromDB();
+        }
+
         if(TimeValidator.wasCalledWithinLastHour(clock)){
             return getAllFromCache();
         } else {

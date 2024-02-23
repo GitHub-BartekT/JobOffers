@@ -50,7 +50,7 @@ public class OfferController {
         log.info("Offer Controller. Request POST /offers");
         OfferReadModel response = offersFacade.save(toWrite);
         log.info("Saved offer with id: {}", response.getId());
-        return ResponseEntity.created(URI.create (getUrlForService() + response.getId())).build();
+        return ResponseEntity.created(URI.create(getUrlForService() + response.getId())).build();
     }
 
     private String getUrlForService() {

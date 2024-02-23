@@ -1,10 +1,14 @@
 package pl.iseebugs.JobOffers.projection;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class OfferReadModel {
     private String id;
     private String url;
