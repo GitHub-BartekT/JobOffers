@@ -2,6 +2,7 @@ spring:
   data:
     mongodb:
       uri: mongodb://admin:admin@localhost:27017/job-offers-web
+      auto-index-creation: true
 job-offers:
   offers-scheduler:
     fetcherRunOccurrence: PT3H
