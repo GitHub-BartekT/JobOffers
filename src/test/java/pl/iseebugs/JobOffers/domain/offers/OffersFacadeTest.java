@@ -108,14 +108,16 @@ class OffersFacadeTest {
         OffersRepository mockRepository = mock(OffersRepository.class);
         when(mockRepository.existsByUrl(anyString())).thenReturn(false);
         when(mockRepository.existsById(anyString())).thenReturn(true);
-        IdGenerable mockGenerator = mock(IdGenerable.class);
+        IdGenerable generator = new IdGeneratorUUID();
         SchedulerFacade mockSchedulerFacade = mock(SchedulerFacade.class);
         OfferWriteModel toSave = OfferWriteModel.builder()
                 .url("123")
                 .id("123")
+                .companyName("foo Company")
+                .jobPosition("bar position")
                 .build();
         //System Under Test
-        OffersFacade toTest = OffersConfiguration.offersFacade(mockRepository, mockGenerator, mockSchedulerFacade);
+        OffersFacade toTest = OffersConfiguration.offersFacade(mockRepository, generator, mockSchedulerFacade);
         //when
         var exception = catchThrowable(() -> toTest.save(toSave));
         //then

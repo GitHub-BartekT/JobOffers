@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Builder
-@Document
+@Document(collection = "savedOffers")
 record OfferEntity(
         @Id
         String id,
