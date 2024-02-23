@@ -77,8 +77,12 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
                 .contentType(MediaType.APPLICATION_JSON));
         // then
         performGetResultsWithNotExistingId.andExpect(status().isNotFound())
-                .andExpect(content().string("Offer with id 9999 not found".trim()))
-                .andExpect(status().isNotFound());
+                .andExpect(content().json("""
+                {
+                "message": "Offer with id 9999 not found",
+                "status": "NOT_FOUND"
+                }
+                """.trim()));
 
 //   Step 12: user made GET /offers/1000 and system returned OK(200) with offer
 //   Step 13: there are 2 new offers in external HTTP server

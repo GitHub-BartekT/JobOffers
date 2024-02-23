@@ -38,9 +38,4 @@ public class OfferController {
         log.info("Taken offer with id: {}", response.getId());
         return ResponseEntity.ok(response);
     }
-
-    @ExceptionHandler(OfferNotFoundException.class)
-    ResponseEntity<String> handlerOfferNotFoundException(OfferNotFoundException e){
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-    }
 }
