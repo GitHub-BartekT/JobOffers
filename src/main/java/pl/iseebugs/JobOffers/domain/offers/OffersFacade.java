@@ -18,7 +18,7 @@ public class OffersFacade {
     public OfferReadModel getOffer(String id) throws OfferNotFoundException {
         OfferReadModel toRead = offersRepository.getById(id)
                                 .map(OfferMapper::toOfferReadModel)
-                                .orElseThrow(OfferNotFoundException::new);
+                                .orElseThrow(() -> new OfferNotFoundException(id));
         return toRead;
     }
 
