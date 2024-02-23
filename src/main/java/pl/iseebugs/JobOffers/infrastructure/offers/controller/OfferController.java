@@ -45,7 +45,7 @@ public class OfferController {
     }
 
     @PostMapping
-    ResponseEntity<OfferReadModel> createOffer(@RequestBody OfferWriteModel toWrite)
+    ResponseEntity<OfferReadModel> createOffer(@RequestBody @Valid OfferWriteModel toWrite)
             throws OfferNotFoundException {
         log.info("Offer Controller. Request POST offer");
         OfferReadModel response = offersFacade.save(toWrite);
