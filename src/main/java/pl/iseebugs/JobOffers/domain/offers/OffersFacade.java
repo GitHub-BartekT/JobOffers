@@ -27,12 +27,19 @@ public class OffersFacade {
     }
 
     public OfferReadModel save(OfferWriteModel offerWriteModel){
-        if(offersRepository.existsByUrl(offerWriteModel.getUrl())){
+        OfferEntity toSave = toEntityFromWriteModel(offerWriteModel);
+
+        if(offersRepository.existsByUrl(toSave.url())){
             throw new IllegalArgumentException("Offer with that url already exists");
-        } else if (offersRepository.existsById(offerWriteModel.getId())) {
+        } else if (offersRepository.existsById(toSave.id())) {
             throw new IllegalArgumentException("Offer with that Id already exists");
         }
 
+        OfferReadModel saved = OfferMapper.toOfferReadModel(offersRepository.save(toSave));
+        return saved;
+    }
+
+    private OfferEntity toEntityFromWriteModel (OfferWriteModel offerWriteModel){
         OfferEntity toSave = OfferEntity.builder()
                 .id(idGenerable.createNewId())
                 .url(offerWriteModel.getUrl())
@@ -41,7 +48,6 @@ public class OffersFacade {
                 .salaryLowerBound(offerWriteModel.getSalaryLowerBound())
                 .salaryUpperBound(offerWriteModel.getSalaryUpperBound())
                 .build();
-        OfferReadModel saved = OfferMapper.toOfferReadModel(offersRepository.save(toSave));
-        return saved;
+        return toSave;
     }
 }
