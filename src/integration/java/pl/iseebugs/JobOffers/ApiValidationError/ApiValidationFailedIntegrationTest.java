@@ -36,4 +36,112 @@ public class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
         ApiValidationErrorDto result = objectMapper.readValue(json, ApiValidationErrorDto.class);
         assertThat(result.message()).containsExactlyInAnyOrder( "Offer url must not be null", "Offer url must not be empty");
     }
+
+    @Test
+    public void should_return_400_bad_request_and_validation_message_when_url_is_empty() throws Exception {
+        //given
+        OfferWriteModel toPost = OfferWriteModel.builder()
+                .url("")
+                .jobPosition("foo position")
+                .companyName("foo Company").build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequest = objectMapper.writeValueAsString(toPost);
+
+        //when
+        ResultActions performPostOffer = mockMvc.perform(post("/offers")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequest));
+        // then
+        MvcResult mvcResult = performPostOffer.andExpect(status().isBadRequest()).andReturn();
+        String json = mvcResult.getResponse().getContentAsString();
+        ApiValidationErrorDto result = objectMapper.readValue(json, ApiValidationErrorDto.class);
+        assertThat(result.message()).containsExactlyInAnyOrder( "Offer url must not be empty");
+    }
+
+    @Test
+    public void should_return_400_bad_request_and_validation_messages_when_jobPosition_is_null() throws Exception {
+        //given
+        OfferWriteModel toPost = OfferWriteModel.builder()
+                .url("foo")
+                .companyName("foo Company").build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequest = objectMapper.writeValueAsString(toPost);
+
+        //when
+        ResultActions performPostOffer = mockMvc.perform(post("/offers")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequest));
+        // then
+        MvcResult mvcResult = performPostOffer.andExpect(status().isBadRequest()).andReturn();
+        String json = mvcResult.getResponse().getContentAsString();
+        ApiValidationErrorDto result = objectMapper.readValue(json, ApiValidationErrorDto.class);
+        assertThat(result.message()).containsExactlyInAnyOrder( "Job position must not be null", "Job position must not be empty");
+    }
+
+    @Test
+    public void should_return_400_bad_request_and_validation_message_when_jobPosition_is_empty() throws Exception {
+        //given
+        OfferWriteModel toPost = OfferWriteModel.builder()
+                .url("foo")
+                .jobPosition("")
+                .companyName("foo Company").build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequest = objectMapper.writeValueAsString(toPost);
+
+        //when
+        ResultActions performPostOffer = mockMvc.perform(post("/offers")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequest));
+        // then
+        MvcResult mvcResult = performPostOffer.andExpect(status().isBadRequest()).andReturn();
+        String json = mvcResult.getResponse().getContentAsString();
+        ApiValidationErrorDto result = objectMapper.readValue(json, ApiValidationErrorDto.class);
+        assertThat(result.message()).containsExactlyInAnyOrder( "Job position must not be empty");
+    }
+
+    @Test
+    public void should_return_400_bad_request_and_validation_messages_when_companyName_is_null() throws Exception {
+        //given
+        OfferWriteModel toPost = OfferWriteModel.builder()
+                .url("foo")
+                .jobPosition("foo position").build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequest = objectMapper.writeValueAsString(toPost);
+
+        //when
+        ResultActions performPostOffer = mockMvc.perform(post("/offers")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequest));
+        // then
+        MvcResult mvcResult = performPostOffer.andExpect(status().isBadRequest()).andReturn();
+        String json = mvcResult.getResponse().getContentAsString();
+        ApiValidationErrorDto result = objectMapper.readValue(json, ApiValidationErrorDto.class);
+        assertThat(result.message()).containsExactlyInAnyOrder( "Company name must not be null", "Company name must not be empty");
+    }
+
+    @Test
+    public void should_return_400_bad_request_and_validation_message_when_companyName_is_empty() throws Exception {
+        //given
+        OfferWriteModel toPost = OfferWriteModel.builder()
+                .url("foo")
+                .jobPosition("foo position")
+                .companyName("").build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequest = objectMapper.writeValueAsString(toPost);
+
+        //when
+        ResultActions performPostOffer = mockMvc.perform(post("/offers")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequest));
+        // then
+        MvcResult mvcResult = performPostOffer.andExpect(status().isBadRequest()).andReturn();
+        String json = mvcResult.getResponse().getContentAsString();
+        ApiValidationErrorDto result = objectMapper.readValue(json, ApiValidationErrorDto.class);
+        assertThat(result.message()).containsExactlyInAnyOrder( "Company name must not be empty");
+    }
 }

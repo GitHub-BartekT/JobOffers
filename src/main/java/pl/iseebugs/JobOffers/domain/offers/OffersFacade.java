@@ -2,6 +2,7 @@ package pl.iseebugs.JobOffers.domain.offers;
 
 import lombok.AllArgsConstructor;
 
+import lombok.extern.log4j.Log4j2;
 import pl.iseebugs.JobOffers.projection.OfferWriteModel;
 import pl.iseebugs.JobOffers.projection.OfferReadModel;
 import pl.iseebugs.JobOffers.domain.scheduler.SchedulerFacade;
@@ -9,6 +10,7 @@ import pl.iseebugs.JobOffers.domain.scheduler.SchedulerFacade;
 import java.util.List;
 
 @AllArgsConstructor
+@Log4j2
 public class OffersFacade {
 
     OffersRepository offersRepository;
@@ -27,13 +29,15 @@ public class OffersFacade {
     }
 
     public OfferReadModel save(OfferWriteModel offerWriteModel){
-        OfferEntity toSave = toEntityFromWriteModel(offerWriteModel);
 
-        if(offersRepository.existsByUrl(toSave.url())){
+        if (offersRepository.existsByUrl(offerWriteModel.getUrl())) {
             throw new IllegalArgumentException("Offer with that url already exists");
-        } else if (offersRepository.existsById(toSave.id())) {
+        }
+        if (offerWriteModel.getId() != null && offersRepository.existsById(offerWriteModel.getId())) {
             throw new IllegalArgumentException("Offer with that Id already exists");
         }
+
+        OfferEntity toSave = toEntityFromWriteModel(offerWriteModel);
 
         OfferReadModel saved = OfferMapper.toOfferReadModel(offersRepository.save(toSave));
         return saved;

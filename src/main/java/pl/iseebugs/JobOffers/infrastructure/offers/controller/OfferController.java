@@ -28,7 +28,7 @@ public class OfferController {
 
     @GetMapping
     ResponseEntity< AllOffersReadModel> readAllOffers(){
-        log.info("OfferController. Request /offers");
+        log.info("OfferController. Request GET /offers");
         List<OfferReadModel> offers = offersFacade.getAll();
         AllOffersReadModel response = AllOffersReadModel.builder()
                 .offerReadModels(offers).build();
@@ -38,7 +38,7 @@ public class OfferController {
 
     @GetMapping({"/{id}"})
     ResponseEntity<OfferReadModel> readOfferById(@PathVariable String id) throws OfferNotFoundException {
-        log.info("Offer Controller. Request /offers/{}", id);
+        log.info("Offer Controller. Request GET /offers/{}", id);
         OfferReadModel response = offersFacade.getOffer(id);
         log.info("Taken offer with id: {}", response.getId());
         return ResponseEntity.ok(response);
@@ -47,7 +47,7 @@ public class OfferController {
     @PostMapping
     ResponseEntity<OfferReadModel> createOffer(@RequestBody @Valid OfferWriteModel toWrite)
             throws OfferNotFoundException {
-        log.info("Offer Controller. Request POST offer");
+        log.info("Offer Controller. Request POST /offers");
         OfferReadModel response = offersFacade.save(toWrite);
         log.info("Saved offer with id: {}", response.getId());
         return ResponseEntity.created(URI.create (getUrlForService() + response.getId())).build();

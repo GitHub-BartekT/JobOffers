@@ -11,7 +11,7 @@ interface OffersRepository extends MongoRepository<OfferEntity, String> {
 
     Optional<OfferEntity> getById(String id);
 
-    boolean existsById(String id);
-
     boolean existsByUrl(String url);
+
+    boolean existsById(String id);
 }
