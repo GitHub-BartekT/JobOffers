@@ -22,12 +22,12 @@ public class OfferController {
     private final OffersFacade offersFacade;
 
     @GetMapping
-    ResponseEntity <List<OfferReadModel>> readAllOffers(){
+    ResponseEntity< AllOffersReadModel> readAllOffers(){
         log.info("Controller. Request readAll /offers");
         List<OfferReadModel> offers = offersFacade.getAll();
         AllOffersReadModel response = AllOffersReadModel.builder()
                 .offerReadModels(offers).build();
         log.info("Taken {} offers", offers.size());
-        return ResponseEntity.ok(offers);
+        return ResponseEntity.ok(response);
     }
 }
