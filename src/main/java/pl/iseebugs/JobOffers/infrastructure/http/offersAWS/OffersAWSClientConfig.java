@@ -1,6 +1,6 @@
 package pl.iseebugs.JobOffers.infrastructure.http.offersAWS;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,25 +13,28 @@ import java.time.Duration;
 @Configuration
 public class OffersAWSClientConfig {
 
-    @Autowired
-    OfferAWSFetcherClientProperties properties;
-
     @Bean
     public RestTemplateResponseErrorHandler restTemplateResponseErrorHandler(){
         return new RestTemplateResponseErrorHandler();
     }
 
     @Bean
-    public RestTemplate restTemplate(RestTemplateResponseErrorHandler restTemplateResponseErrorHandler){
+    public RestTemplate restTemplate(
+            @Value("${job-offers.offers-fetcher.http.client.config.connectionTimeout:1000}") int connectionTimeout,
+            @Value("${job-offers.offers-fetcher.http.client.config.readTimeout:1000}") int readTimeout,
+            RestTemplateResponseErrorHandler restTemplateResponseErrorHandler){
         return new RestTemplateBuilder()
                 .errorHandler(restTemplateResponseErrorHandler)
-                .setConnectTimeout(Duration.ofMillis(properties.connectionTimeout()))
-                .setReadTimeout(Duration.ofMillis(properties.readTimeout()))
+                    .setConnectTimeout(Duration.ofMillis(connectionTimeout))
+                .setReadTimeout(Duration.ofMillis(readTimeout))
                 .build();
     }
 
     @Bean
-    public OffersFetchable remoteNumberGeneratorClient(RestTemplate restTemplate){
-        return new OffersFetcherRestTemplate(restTemplate, properties.uri(), properties.port());
+    public OffersFetchable remoteNumberGeneratorClient(
+            @Value("${job-offers.offers-fetcher.http.client.config.uri}") String uri,
+            @Value("${job-offers.offers-fetcher.http.client.config.port}") int port,
+            RestTemplate restTemplate){
+        return new OffersFetcherRestTemplate(restTemplate, uri, port);
     }
 }
