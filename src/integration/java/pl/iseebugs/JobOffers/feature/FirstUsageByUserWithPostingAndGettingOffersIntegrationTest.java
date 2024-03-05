@@ -14,6 +14,7 @@ import pl.iseebugs.JobOffers.BaseIntegrationTest;
 import pl.iseebugs.JobOffers.SampleJobOfferResponse;
 import pl.iseebugs.JobOffers.domain.loginAndRegister.projection.RegisterResultReadModel;
 import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetcherFacade;
+import pl.iseebugs.JobOffers.infrastructure.loginAndRegister.controller.dto.JwtResponseDto;
 import pl.iseebugs.JobOffers.infrastructure.offers.controller.AllOffersReadModel;
 import pl.iseebugs.JobOffers.projection.OfferReadModel;
 import pl.iseebugs.JobOffers.projection.OfferWriteModel;
@@ -22,6 +23,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static java.time.ZoneOffset.UTC;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -112,6 +114,25 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
 
 
         //   Step 6: user tried to get JWT token by requesting POST /token with username=someUser, password=somePassword and system returned OK(200) and jwttoken=AAAA.BBBB.CCC
+        // given && then
+        ResultActions successLoginRequest = mockMvc.perform(post("/token")
+                .content("""
+                {
+                "username": "someUser",
+                "password": "somePassword"
+                }
+                """.trim())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+        // then
+        MvcResult mvcResultStep6 = successLoginRequest.andExpect(status().isOk()).andReturn();
+        String json = mvcResultStep6.getResponse().getContentAsString();
+        JwtResponseDto jwtResponse = objectMapper.readValue(json, JwtResponseDto.class);
+        assertAll(
+                () -> assertThat(jwtResponse.username()).isEqualTo("someUser"),
+                () -> assertThat(jwtResponse.token()).matches(Pattern.compile("^([A-Za-z0-9-_=]+\\.)+([A-Za-z0-9-_=])+\\.?$"))
+        );
+
 
 
         //   Step 7: user made GET /offers with header “Authorization: Bearer AAAA.BBBB.CCC” and system returned OK(200) with 0 offers
@@ -121,8 +142,8 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
         );
         //then
         MvcResult mvcResult = offersAPINoOffers.andExpect(status().isOk()).andReturn();
-        String json = mvcResult.getResponse().getContentAsString();
-        AllOffersReadModel offersFromBackend = objectMapper.readValue(json, AllOffersReadModel.class);
+        String jsonStep6 = mvcResult.getResponse().getContentAsString();
+        AllOffersReadModel offersFromBackend = objectMapper.readValue(jsonStep6, AllOffersReadModel.class);
 
         assertThat(offersFromBackend.offerReadModels()).isEmpty();
 
