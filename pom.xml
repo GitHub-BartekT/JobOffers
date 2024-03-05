@@ -43,6 +43,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+        </dependency>
         <!-- Only needed to run tests in a version of IntelliJ IDEA that bundles older versions -->
         <dependency>
             <groupId>org.junit.platform</groupId>

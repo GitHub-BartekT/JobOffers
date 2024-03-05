@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import pl.iseebugs.JobOffers.BaseIntegrationTest;
@@ -17,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
 
     @Test
+    @WithMockUser
     public void should_return_400_bad_request_and_validation_messages_when_url_is_null() throws Exception {
     //given
     OfferWriteModel toPost = OfferWriteModel.builder()
