@@ -169,6 +169,7 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
         //given + when
         clock.advanceInTimeBy(Duration.ofHours(2));
         ResultActions offersAPITwoOffers = mockMvc.perform(get("/offers")
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -187,6 +188,7 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
         //   Step 11: user made GET /offers/9999 and system returned NOT_FOUND(404) with message “Offer with id 9999 not found”
         // when
         ResultActions performGetResultsWithNotExistingId = mockMvc.perform(get("/offers/9999")
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON));
         // then
         performGetResultsWithNotExistingId.andExpect(status().isNotFound())
@@ -204,6 +206,7 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
                 .filter(offer -> offer.getCompanyName().equals("OCC"))
                 .findFirst().get().getId();
         ResultActions performGetResultsWithExistingId = mockMvc.perform(get("/offers/"+ offerId)
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON));
         // then
         performGetResultsWithExistingId.andExpect(status().isOk())
@@ -236,6 +239,7 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
         //given + when
         clock.advanceInTimeBy(Duration.ofHours(2));
         ResultActions offersAPIFourOffers = mockMvc.perform(get("/offers")
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -263,7 +267,8 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
 
         //when
         ResultActions performPostOffer = mockMvc.perform(post("/offers")
-                .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest))
         // then
                 .andExpect(status().isCreated());
@@ -273,6 +278,7 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
         //given + when
         clock.advanceInTimeBy(Duration.ofHours(2));
         ResultActions offersAPIOneOffers = mockMvc.perform(get("/offers")
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
         );
 
