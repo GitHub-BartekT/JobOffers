@@ -5,6 +5,7 @@ import com.github.tomakehurst.wiremock.http.Fault;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.web.server.ResponseStatusException;
 import pl.iseebugs.JobOffers.SampleJobOfferResponse;
 import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetchable;
@@ -27,6 +28,7 @@ public class OffersHttpAWSClientIntegrationTest implements SampleJobOfferRespons
     OffersFetchable remoteOfferClient = new OffersHttpClientTestConfig().remoteOfferAWSTestClient(wireMockServer.getPort(),1000 ,1000);
 
     @Test
+    @WithMockUser
     void should_throw_exception_500_when_fault_connection_reset_by_peer() {
         // given
         wireMockServer.stubFor(WireMock.get("/offers")
