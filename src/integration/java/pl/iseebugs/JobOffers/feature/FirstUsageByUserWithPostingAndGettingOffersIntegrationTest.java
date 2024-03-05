@@ -90,7 +90,21 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
         failedGetOffersRequest.andExpect(status().isUnauthorized());
 
 
-        //   Step 5: user made POST /register with username=someUser, password=somePassword and system registered user with status OK(200)
+        //   Step 5: user made POST /register with username=someUser, password=somePassword and system registered user with status CREATED(201)
+        // given && then
+        ResultActions registerAction = mockMvc.perform(post("/register")
+                .content("""
+                {
+                "username": "someUser",
+                "password": "somePassword"
+                }
+                """.trim())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+        // then
+        registerAction.andExpect(status().isCreated());
+
+
         //   Step 6: user tried to get JWT token by requesting POST /token with username=someUser, password=somePassword and system returned OK(200) and jwttoken=AAAA.BBBB.CCC
 
 
