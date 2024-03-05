@@ -1,6 +1,7 @@
 package pl.iseebugs.JobOffers.domain.loginAndRegister;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.security.authentication.BadCredentialsException;
 import pl.iseebugs.JobOffers.domain.loginAndRegister.projection.RegisterResultReadModel;
 import pl.iseebugs.JobOffers.domain.loginAndRegister.projection.UserReadModel;
 import pl.iseebugs.JobOffers.domain.loginAndRegister.projection.UserWriteModel;
@@ -9,7 +10,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 class LoginAndRegisterFacadeTest {
 
     @Test
-    void findByUsername_throw_UserNotFoundException_when_no_user_with_given_username() throws UserNotFoundException {
+    void findByUsername_throw_BadCredentialsException_when_no_user_with_given_username() throws BadCredentialsException {
         //given
         UserRepository mockUserRepository = mock(UserRepository.class);
         when(mockUserRepository.findByUsername(anyString())).thenReturn(Optional.empty());
@@ -25,11 +25,11 @@ class LoginAndRegisterFacadeTest {
         //when
         Throwable exception = catchThrowable(() -> toTest.findByUsername("foo"));
         //then
-        assertThat(exception).isInstanceOf(UserNotFoundException.class);
+        assertThat(exception).isInstanceOf(BadCredentialsException.class);
     }
 
     @Test
-    void findByUsername_returns_user_with_given_username() throws UserNotFoundException {
+    void findByUsername_returns_user_with_given_username() throws BadCredentialsException {
         //given
         UserRepository repository = new InMemoryRepositoryOffersTestImpl();
         repository.save(User.builder()
