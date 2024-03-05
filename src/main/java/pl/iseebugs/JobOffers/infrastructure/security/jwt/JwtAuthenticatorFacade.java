@@ -34,6 +34,7 @@ public class JwtAuthenticatorFacade {
                 .build();
     }
 
+    //TODO: secret
     private String createToken(User user) {
         String secretKey = "tratata";
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
