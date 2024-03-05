@@ -6,6 +6,7 @@ import com.github.tomakehurst.wiremock.client.WireMock;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
@@ -81,6 +82,14 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
 
 
         //   Step 4: User made GET /offers with no jwt token and system returned UNAUTHORIZED(401)
+        // given && then
+        ResultActions failedGetOffersRequest = mockMvc.perform(get("/offers")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+        //then
+        failedGetOffersRequest.andExpect(status().isUnauthorized());
+
+
         //   Step 5: user made POST /register with username=someUser, password=somePassword and system registered user with status OK(200)
         //   Step 6: user tried to get JWT token by requesting POST /token with username=someUser, password=somePassword and system returned OK(200) and jwttoken=AAAA.BBBB.CCC
 
