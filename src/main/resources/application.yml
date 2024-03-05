@@ -3,6 +3,7 @@ spring:
     mongodb:
       uri: mongodb://admin:admin@localhost:27017/job-offers-web
       auto-index-creation: true
+      
 job-offers:
   offers-scheduler:
     fetcherRunOccurrence: PT3H
@@ -14,5 +15,12 @@ job-offers:
           port: 5057
           readTimeout: 5000
           connectionTimeout: 5000
+
 scheduling:
   enabled: true
+
+auth:
+  jwt:
+    secret: ${JWT_SECRET}
+    issuer: job-offers-backend
+    expiration-days: 30

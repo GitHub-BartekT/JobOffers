@@ -19,6 +19,7 @@ import java.time.*;
 @Log4j2
 public class JwtAuthenticatorFacade {
 
+    private final JwtConfigurationProperties properties;
     private final AuthenticationManager authenticationManager;
     private final Clock clock;
 
@@ -34,13 +35,12 @@ public class JwtAuthenticatorFacade {
                 .build();
     }
 
-    //TODO: secret
     private String createToken(User user) {
-        String secretKey = "tratata";
+        String secretKey = properties.secret();
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         Instant now = LocalDateTime.now(clock).toInstant(ZoneOffset.UTC);
-        Instant expiresAt = now.plus(Duration.ofDays(30));
-        String issuer = "Job offers Service";
+        Instant expiresAt = now.plus(Duration.ofDays(properties.expirationDays()));
+        String issuer = properties.issuer();
         return JWT.create()
                 .withSubject(user.getUsername())
                 .withIssuedAt(now)

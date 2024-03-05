@@ -21,7 +21,7 @@ import java.util.Collections;
 @AllArgsConstructor
 public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
-//    private final JwtConfigurationProperties properties;
+    private final JwtConfigurationProperties properties;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -35,9 +35,8 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    //TODO: secret
     private UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(String token) {
-        String secretKey = "tratata";
+        String secretKey = properties.secret();
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         JWTVerifier verifier = JWT.require(algorithm)
                 .build();
