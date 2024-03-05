@@ -128,9 +128,10 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
         MvcResult mvcResultStep6 = successLoginRequest.andExpect(status().isOk()).andReturn();
         String json = mvcResultStep6.getResponse().getContentAsString();
         JwtResponseDto jwtResponse = objectMapper.readValue(json, JwtResponseDto.class);
+        String token = jwtResponse.token();
         assertAll(
                 () -> assertThat(jwtResponse.username()).isEqualTo("someUser"),
-                () -> assertThat(jwtResponse.token()).matches(Pattern.compile("^([A-Za-z0-9-_=]+\\.)+([A-Za-z0-9-_=])+\\.?$"))
+                () -> assertThat(token).matches(Pattern.compile("^([A-Za-z0-9-_=]+\\.)+([A-Za-z0-9-_=])+\\.?$"))
         );
 
 
@@ -138,6 +139,7 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
         //   Step 7: user made GET /offers with header “Authorization: Bearer AAAA.BBBB.CCC” and system returned OK(200) with 0 offers
         //given + when
         ResultActions offersAPINoOffers = mockMvc.perform(get("/offers")
+                        .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
         );
         //then
