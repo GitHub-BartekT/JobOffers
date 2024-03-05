@@ -1,4 +1,4 @@
-package pl.iseebugs.JobOffers.infrastructure.token.controller.error;
+package pl.iseebugs.JobOffers.infrastructure.loginAndRegister.controller.error;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;

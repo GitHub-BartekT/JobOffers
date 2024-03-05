@@ -8,5 +8,5 @@ import lombok.Getter;
 public class RegisterResultReadModel {
     String id;
     String username;
-    boolean isCreated;
+    boolean created;
 }

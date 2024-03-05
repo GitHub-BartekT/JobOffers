@@ -1,10 +1,12 @@
-package pl.iseebugs.JobOffers.infrastructure.token.controller;
+package pl.iseebugs.JobOffers.infrastructure.loginAndRegister.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.iseebugs.JobOffers.infrastructure.loginAndRegister.controller.dto.JwtResponseDto;
+import pl.iseebugs.JobOffers.infrastructure.loginAndRegister.controller.dto.TokenRequestDto;
 import pl.iseebugs.JobOffers.infrastructure.security.jwt.JwtAuthenticatorFacade;
 
 @RestController

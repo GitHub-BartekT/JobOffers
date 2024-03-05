@@ -1,12 +1,10 @@
 package pl.iseebugs.JobOffers.feature;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
@@ -14,6 +12,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import pl.iseebugs.JobOffers.AdjustableClock;
 import pl.iseebugs.JobOffers.BaseIntegrationTest;
 import pl.iseebugs.JobOffers.SampleJobOfferResponse;
+import pl.iseebugs.JobOffers.domain.loginAndRegister.projection.RegisterResultReadModel;
 import pl.iseebugs.JobOffers.domain.offersFetcher.OffersFetcherFacade;
 import pl.iseebugs.JobOffers.infrastructure.offers.controller.AllOffersReadModel;
 import pl.iseebugs.JobOffers.projection.OfferReadModel;
@@ -102,7 +101,14 @@ public class FirstUsageByUserWithPostingAndGettingOffersIntegrationTest extends 
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
         );
         // then
-        registerAction.andExpect(status().isCreated());
+        MvcResult registerActionResult = registerAction.andExpect(status().isCreated()).andReturn();
+        String registerActionResultJson = registerActionResult.getResponse().getContentAsString();
+        RegisterResultReadModel registrationResultDto = objectMapper.readValue(registerActionResultJson, RegisterResultReadModel.class);
+        assertAll(
+                () -> assertThat(registrationResultDto.getUsername()).isEqualTo("someUser"),
+                () -> assertThat(registrationResultDto.getId()).isNotNull(),
+                () -> assertThat(registrationResultDto.isCreated()).isTrue()
+        );
 
 
         //   Step 6: user tried to get JWT token by requesting POST /token with username=someUser, password=somePassword and system returned OK(200) and jwttoken=AAAA.BBBB.CCC

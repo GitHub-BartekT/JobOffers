@@ -6,8 +6,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import pl.iseebugs.JobOffers.infrastructure.token.controller.JwtResponseDto;
-import pl.iseebugs.JobOffers.infrastructure.token.controller.TokenRequestDto;
+import pl.iseebugs.JobOffers.infrastructure.loginAndRegister.controller.dto.JwtResponseDto;
+import pl.iseebugs.JobOffers.infrastructure.loginAndRegister.controller.dto.TokenRequestDto;
 
 @AllArgsConstructor
 @Component

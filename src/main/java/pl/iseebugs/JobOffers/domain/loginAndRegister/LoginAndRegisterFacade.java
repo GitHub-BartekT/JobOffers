@@ -35,7 +35,7 @@ public class LoginAndRegisterFacade {
         if (userRepository.existsByUsername(userWriteModel.getUsername())){
             return RegisterResultReadModel.builder()
                     .id("")
-                    .isCreated(false)
+                    .created(false)
                     .username(userWriteModel.getUsername()).build();
         }
 
@@ -48,7 +48,7 @@ public class LoginAndRegisterFacade {
         User saved = userRepository.save(toSave);
         return RegisterResultReadModel.builder()
                 .id(saved.id())
-                .isCreated(true)
+                .created(true)
                 .username(saved.username()).build();
     }
 }
