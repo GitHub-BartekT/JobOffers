@@ -1,4 +1,7 @@
 spring:
+  cache:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:63792}
   data:
     mongodb:
       uri: mongodb://admin:admin@localhost:27017/job-offers-web
