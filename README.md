@@ -1,6 +1,12 @@
 # Job Offers
 Program simulate a lottery game.
 
+### Architecture ✅
+Hexagonal architecture.
+
+## Modules
+![V_02_JobOffers_architecureSchema](https://github.com/GitHub-BartekT/JobOffers/assets/119587290/bbe6d24d-1819-4f16-b91f-f03bce12d7e6)
+
 ## How it looks
 
 ### Brief
@@ -18,9 +24,9 @@ The program do:
 ## What Has Been Accomplished💡
 Backend development using Java with Spring Boot.
 
-### Architecture ✅
-Hexagonal architecture.
-
+## API
+![obraz](https://github.com/GitHub-BartekT/JobOffers/assets/119587290/38fd4d45-13c8-4e30-825c-67190e8919d4)
+   
 ### Database✅
 Database setup using MongoDB.
 
