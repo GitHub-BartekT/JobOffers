@@ -8,5 +8,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "savedOffers")
 record OfferSchedulerEntity(
         @Id
-        String id, String url, String jobPosition, String companyName, double salaryLowerBound, double salaryUpperBound) {
+        String id,
+        String url,
+        String jobPosition,
+        String companyName,
+        double salaryLowerBound,
+        double salaryUpperBound) {
 }
