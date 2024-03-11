@@ -1,11 +1,11 @@
 # Job Offers
 Program simulate a lottery game.
 
-### Architecture ✅
+### Architecture✅
 Hexagonal architecture.
 
 ## Modules
-![V_02_JobOffers_architecureSchema](https://github.com/GitHub-BartekT/JobOffers/assets/119587290/bbe6d24d-1819-4f16-b91f-f03bce12d7e6)
+![V_03_JobOffers_architecureSchema](https://github.com/GitHub-BartekT/JobOffers/assets/119587290/54a6db5b-733c-4c4d-8f08-ef7e3150693a)
 
 ## How it looks
 
