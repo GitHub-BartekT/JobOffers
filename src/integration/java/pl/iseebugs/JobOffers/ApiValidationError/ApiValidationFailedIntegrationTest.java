@@ -1,6 +1,5 @@
 package pl.iseebugs.JobOffers.ApiValidationError;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -9,6 +8,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import pl.iseebugs.JobOffers.BaseIntegrationTest;
 import pl.iseebugs.JobOffers.infrastructure.apiValidation.ApiValidationErrorDto;
+import pl.iseebugs.JobOffers.infrastructure.loginAndRegister.controller.dto.JwtResponseDto;
 import pl.iseebugs.JobOffers.projection.OfferWriteModel;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,6 +42,7 @@ public class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
     @Test
     public void should_return_400_bad_request_and_validation_message_when_url_is_empty() throws Exception {
         //given
+        String jwtToken = loginAndRegister();
         OfferWriteModel toPost = OfferWriteModel.builder()
                 .url("")
                 .jobPosition("foo position")
@@ -52,6 +53,7 @@ public class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
 
         //when
         ResultActions performPostOffer = mockMvc.perform(post("/offers")
+                .header("Authorization", "Bearer " + jwtToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest));
         // then
@@ -64,6 +66,7 @@ public class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
     @Test
     public void should_return_400_bad_request_and_validation_messages_when_jobPosition_is_null() throws Exception {
         //given
+        String jwtToken = loginAndRegister();
         OfferWriteModel toPost = OfferWriteModel.builder()
                 .url("foo")
                 .companyName("foo Company").build();
@@ -73,6 +76,7 @@ public class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
 
         //when
         ResultActions performPostOffer = mockMvc.perform(post("/offers")
+                .header("Authorization", "Bearer " + jwtToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest));
         // then
@@ -85,6 +89,7 @@ public class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
     @Test
     public void should_return_400_bad_request_and_validation_message_when_jobPosition_is_empty() throws Exception {
         //given
+        String jwtToken = loginAndRegister();
         OfferWriteModel toPost = OfferWriteModel.builder()
                 .url("foo")
                 .jobPosition("")
@@ -95,6 +100,7 @@ public class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
 
         //when
         ResultActions performPostOffer = mockMvc.perform(post("/offers")
+                .header("Authorization", "Bearer " + jwtToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest));
         // then
@@ -107,6 +113,7 @@ public class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
     @Test
     public void should_return_400_bad_request_and_validation_messages_when_companyName_is_null() throws Exception {
         //given
+        String jwtToken = loginAndRegister();
         OfferWriteModel toPost = OfferWriteModel.builder()
                 .url("foo")
                 .jobPosition("foo position").build();
@@ -116,6 +123,7 @@ public class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
 
         //when
         ResultActions performPostOffer = mockMvc.perform(post("/offers")
+                .header("Authorization", "Bearer " + jwtToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest));
         // then
@@ -128,6 +136,7 @@ public class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
     @Test
     public void should_return_400_bad_request_and_validation_message_when_companyName_is_empty() throws Exception {
         //given
+        String jwtToken = loginAndRegister();
         OfferWriteModel toPost = OfferWriteModel.builder()
                 .url("foo")
                 .jobPosition("foo position")
@@ -138,6 +147,7 @@ public class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
 
         //when
         ResultActions performPostOffer = mockMvc.perform(post("/offers")
+                .header("Authorization", "Bearer " + jwtToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest));
         // then
@@ -145,5 +155,38 @@ public class ApiValidationFailedIntegrationTest extends BaseIntegrationTest {
         String json = mvcResult.getResponse().getContentAsString();
         ApiValidationErrorDto result = objectMapper.readValue(json, ApiValidationErrorDto.class);
         assertThat(result.message()).containsExactlyInAnyOrder( "Company name must not be empty");
+    }
+
+    String loginAndRegister() throws Exception {
+        // step 1: someUser was registered with somePassword
+        // given & when
+        ResultActions registerAction = mockMvc.perform(post("/register")
+                .content("""
+                        {
+                        "username": "someUser",
+                        "password": "somePassword"
+                        }
+                        """.trim())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+        // then
+        registerAction.andExpect(status().isCreated());
+
+        // step 2: login
+        // given && when
+        ResultActions successLoginRequest = mockMvc.perform(post("/token")
+                .content("""
+                        {
+                        "username": "someUser",
+                        "password": "somePassword"
+                        }
+                        """.trim())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+        // then
+        MvcResult mvcTokenResult = successLoginRequest.andExpect(status().isOk()).andReturn();
+        String jsonToken = mvcTokenResult.getResponse().getContentAsString();
+        JwtResponseDto jwtResponse = objectMapper.readValue(jsonToken, JwtResponseDto.class);
+        return jwtResponse.token();
     }
 }

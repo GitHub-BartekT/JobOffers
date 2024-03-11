@@ -3,7 +3,6 @@ package pl.iseebugs.JobOffers.domain.scheduler;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
-import pl.iseebugs.JobOffers.infrastructure.cacheManager.CacheManagerFacade;
 import pl.iseebugs.JobOffers.projection.OfferReadModel;
 
 import java.text.SimpleDateFormat;
@@ -15,14 +14,12 @@ import java.util.List;
 public class SchedulerFacade {
 
     private final SchedulerRepository schedulerRepository;
-    private final CacheManagerFacade cacheManagerFacade;
     final Clock clock;
     SchedulerFetchListener schedulerFetchListener;
     private final SimpleDateFormat dateFormat;
 
-    SchedulerFacade(SchedulerRepository schedulerRepository, CacheManagerFacade cacheManagerFacade, Clock clock, SchedulerFetchListener schedulerFetchListener) {
+    SchedulerFacade(SchedulerRepository schedulerRepository, Clock clock, SchedulerFetchListener schedulerFetchListener) {
         this.schedulerRepository = schedulerRepository;
-        this.cacheManagerFacade = cacheManagerFacade;
         this.clock = clock;
         this.schedulerFetchListener = schedulerFetchListener;
         dateFormat = new SimpleDateFormat("HH:mm:ss");
