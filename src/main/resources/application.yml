@@ -1,8 +1,15 @@
 spring:
+  cache:
+    redis:
+      time-to-live: PT60M
+    type: redis
   data:
     mongodb:
       uri: mongodb://admin:admin@localhost:27017/job-offers-web
       auto-index-creation: true
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:63792}
 
 job-offers:
   offers-scheduler:

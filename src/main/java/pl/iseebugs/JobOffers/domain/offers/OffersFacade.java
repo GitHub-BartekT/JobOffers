@@ -3,6 +3,7 @@ package pl.iseebugs.JobOffers.domain.offers;
 import lombok.AllArgsConstructor;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.Cacheable;
 import pl.iseebugs.JobOffers.projection.OfferWriteModel;
 import pl.iseebugs.JobOffers.projection.OfferReadModel;
 import pl.iseebugs.JobOffers.domain.scheduler.SchedulerFacade;
@@ -17,12 +18,14 @@ public class OffersFacade {
     IdGenerable idGenerable;
     SchedulerFacade schedulerFacade;
 
+
     public OfferReadModel getOffer(String id) throws OfferNotFoundException {
         OfferReadModel toRead = offersRepository.getById(id)
                                 .map(OfferMapper::toOfferReadModel)
                                 .orElseThrow(() -> new OfferNotFoundException(id));
         return toRead;
     }
+
 
     public List<OfferReadModel> getAll(){
         return schedulerFacade.getAll();

@@ -1,6 +1,7 @@
 package pl.iseebugs.JobOffers.domain.scheduler;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import pl.iseebugs.JobOffers.infrastructure.cacheManager.CacheManagerFacade;
 import pl.iseebugs.JobOffers.projection.OfferReadModel;
@@ -33,24 +34,8 @@ public class SchedulerFacade {
         return schedulerFetchListener.onScheduleFetchAllOffersAndSaveAllIfNotExists();
     }
 
+    @Cacheable("jobOffers")
     public List<OfferReadModel> getAll(){
-        if (cacheManagerFacade.isEmpty()){
-            return getAllFromDB();
-        }
-
-        if(TimeValidator.wasCalledWithinLastHour(clock)){
-            return getAllFromCache();
-        } else {
-            return getAllFromDB();
-        }
-    }
-
-    private List<OfferReadModel> getAllFromCache(){
-        return cacheManagerFacade.getAll();
-    }
-
-    private List<OfferReadModel> getAllFromDB(){
-        cacheManagerFacade.updateCache();
         return schedulerRepository.findAll().stream()
                 .map(SchedulerMapper::toOfferReadModel)
                 .toList();
