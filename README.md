@@ -31,7 +31,7 @@ The program do:
 ## What Has Been Accomplished💡
 Backend development using Java with Spring Boot.
 
-## API
+## Rest API
 ![obraz](https://github.com/GitHub-BartekT/JobOffers/assets/119587290/38fd4d45-13c8-4e30-825c-67190e8919d4)
    
 ### Database✅
