@@ -1,5 +1,6 @@
 # Job Offers
-Program simulate a lottery game.
+Application to adding job offers. Data are being taken from external service. User can add job offer to exists offers. 
+All offers are caching.
 
 ### Live demo in AWS Cloud
 Live demo where you can check out the JobOffers API.
@@ -8,7 +9,7 @@ Live demo where you can check out the JobOffers API.
 
 
 ### Architecture✅
-Hexagonal architecture.
+Hexagonal architecture. Clean Architecture.
 
 ## Modules
 ![V_03_JobOffers_architecureSchema](https://github.com/GitHub-BartekT/JobOffers/assets/119587290/54a6db5b-733c-4c4d-8f08-ef7e3150693a)
@@ -40,10 +41,12 @@ Database setup using MongoDB.
 Facade tests, Integration tests.
 
 ### Other technologies
-- Security, Atuh0, JWT✅
+- Security, Auth0, JWT✅
+- MongoDB✅
 - Docker✅
 - Swagger ✅
 - Scheduler ✅
 - Logger - slf4j ✅
+- Lombok✅
 - Redis ✅
 - Git / GitHub✅
