@@ -2,12 +2,6 @@
 Application to adding job offers. Data are being taken from external service. User can add job offer to exists offers. 
 All offers are caching.
 
-### Live demo in AWS Cloud
-Live demo where you can check out the JobOffers API.
-
-[JobOffers](http://ec2-3-120-193-172.eu-central-1.compute.amazonaws.com:8000/swagger-ui/index.html#/)
-
-
 ### Architecture✅
 Hexagonal architecture. Clean Architecture.
 
